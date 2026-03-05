@@ -29,7 +29,7 @@ const CTASection = () => {
             </p>
             <a
               href="#"
-              className="group inline-flex items-center gap-2 bg-background text-foreground px-8 py-4 rounded-full text-base font-semibold hover:bg-foreground hover:text-background transition-all duration-300"
+              className="group inline-flex items-center gap-2 bg-foreground text-background px-8 py-4 rounded-full text-base font-semibold hover:opacity-90 transition-all duration-300"
             >
               Agenda consultorías
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
