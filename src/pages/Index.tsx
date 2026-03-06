@@ -146,7 +146,7 @@ const EficiencIA = () => {
         ::-webkit-scrollbar-track { background: #030303; }
         ::-webkit-scrollbar-thumb { background: #39ff8f; }
 
-        .nav-link { color: #bbb; text-decoration: none; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.3s; font-family: 'IBM Plex Mono', monospace; }
+        .nav-link { color: #e0e0e0; text-decoration: none; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.3s; font-family: 'IBM Plex Mono', monospace; }
         .nav-link:hover { color: #39ff8f; }
 
         .hero-title { font-size: clamp(40px, 6vw, 88px); font-weight: 800; line-height: 1.0; letter-spacing: -0.04em; font-family: 'Bricolage Grotesque', sans-serif; background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 50%, #39ff8f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -171,13 +171,13 @@ const EficiencIA = () => {
         .service-tag { display: inline-block; border: 1px solid rgba(57,255,143,0.2); color: #39ff8f; padding: 6px 16px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin: 4px; border-radius: 1px; transition: all 0.2s; }
         .service-tag:hover { background: rgba(57,255,143,0.08); border-color: rgba(57,255,143,0.5); }
 
-        .input-field { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #f0f0f0; padding: 16px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; border-radius: 1px; outline: none; transition: border-color 0.3s; margin-bottom: 16px; display: block; }
+        .input-field { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.22); color: #f0f0f0; padding: 16px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; border-radius: 1px; outline: none; transition: border-color 0.3s; margin-bottom: 16px; display: block; }
         .input-field:focus { border-color: rgba(57,255,143,0.4); }
-        .input-field::placeholder { color: #555; }
+        .input-field::placeholder { color: #888; }
 
-        .textarea-field { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: #f0f0f0; padding: 16px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; border-radius: 1px; outline: none; transition: border-color 0.3s; resize: vertical; min-height: 140px; margin-bottom: 24px; display: block; }
+        .textarea-field { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.22); color: #f0f0f0; padding: 16px 20px; font-family: 'IBM Plex Mono', monospace; font-size: 14px; border-radius: 1px; outline: none; transition: border-color 0.3s; resize: vertical; min-height: 140px; margin-bottom: 24px; display: block; }
         .textarea-field:focus { border-color: rgba(57,255,143,0.4); }
-        .textarea-field::placeholder { color: #555; }
+        .textarea-field::placeholder { color: #888; }
 
         .section-label { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase; color: #39ff8f; margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
         .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: rgba(57,255,143,0.3); }
@@ -471,7 +471,7 @@ const EficiencIA = () => {
                   <p style={{ color: "#ccc", fontFamily: "'IBM Plex Mono', monospace", fontSize: 14, lineHeight: 1.8 }}>Te contactamos en menos de 24 horas para coordinar tu diagnóstico gratuito.</p>
                 </div>
               ) : (
-                <div style={{ border: "1px solid rgba(255,255,255,0.06)", background: "rgba(255,255,255,0.015)", padding: 48, borderRadius: 2 }}>
+                <div style={{ border: "1px solid rgba(255,255,255,0.18)", background: "rgba(255,255,255,0.04)", padding: 48, borderRadius: 2 }}>
                   <input className="input-field" placeholder="Tu nombre" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
                   <input className="input-field" placeholder="tu@email.com" type="email" value={formData.email} onChange={e => setFormData({ ...formData, email: e.target.value })} />
                   <textarea className="textarea-field" placeholder="Contanos sobre tu proyecto o proceso que querés automatizar..." value={formData.message} onChange={e => setFormData({ ...formData, message: e.target.value })} />
