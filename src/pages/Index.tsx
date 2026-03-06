@@ -113,7 +113,7 @@ const EficiencIA = () => {
     if (!formData.name || !formData.email) return;
     setSending(true);
     try {
-      const res = await fetch("https://formspree.io/f/YOUR_FORM_ID", {
+      const res = await fetch("https://formspree.io/f/xnjgqdvq", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ name: formData.name, email: formData.email, message: formData.message }),
