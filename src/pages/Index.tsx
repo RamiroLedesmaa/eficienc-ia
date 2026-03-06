@@ -142,7 +142,7 @@ const RutIA = () => {
   const faqs = [
     { q: "¿Cuánto tiempo tarda implementar una solución?", a: "Depende de la complejidad, pero la mayoría de nuestras implementaciones están activas entre 2 y 6 semanas. Comenzamos con un sprint de diagnóstico de 3 días para definir el alcance exacto." },
     { q: "¿Necesito tener conocimientos técnicos?", a: "Para nada. Nosotros nos encargamos de toda la parte técnica. Solo necesitás conocer tu negocio — nosotros traducimos eso en soluciones de IA." },
-    { q: "¿Cuánto cuesta?", a: "Cada proyecto es diferente. Tenemos soluciones desde $500 USD para automatizaciones puntuales hasta proyectos más complejos a medida. La primera consulta es completamente gratuita y sin compromiso." },
+    { q: "¿Cuánto cuesta?", a: "Cada proyecto es diferente según el proceso, la complejidad y el alcance. Por eso no trabajamos con precios fijos — agendá el diagnóstico gratuito y en 24hs te damos un rango exacto y sin compromiso." },
     { q: "¿Qué pasa si la solución no funciona como esperaba?", a: "Incluimos soporte post-lanzamiento en todos nuestros proyectos y seguimos iterando hasta que el resultado sea exactamente el que buscás. No entregamos y desaparecemos." },
     { q: "¿Trabajan con empresas de cualquier rubro?", a: "Sí. Hemos trabajado con e-commerce, servicios profesionales, logística, salud y educación. Si tenés un proceso repetitivo, muy probablemente podemos automatizarlo." },
   ];
@@ -165,7 +165,7 @@ const RutIA = () => {
         .nav-link { color: #e0e0e0; text-decoration: none; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.3s; font-family: 'IBM Plex Mono', monospace; }
         .nav-link:hover { color: #39ff8f; }
 
-        .hero-title { font-size: clamp(40px, 6vw, 88px); font-weight: 800; line-height: 1.0; letter-spacing: -0.04em; font-family: 'Bricolage Grotesque', sans-serif; background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 50%, #39ff8f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-title { font-size: clamp(40px, 6vw, 88px); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; font-family: 'Bricolage Grotesque', sans-serif; background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 50%, #39ff8f 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
         .glow-dot { width: 600px; height: 600px; border-radius: 50%; background: radial-gradient(circle, rgba(57,255,143,0.08) 0%, transparent 70%); position: fixed; pointer-events: none; transform: translate(-50%, -50%); transition: left 0.15s ease, top 0.15s ease; z-index: 0; }
 
@@ -259,21 +259,18 @@ const RutIA = () => {
 
       {/* ── NAV ── */}
       <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "20px clamp(24px, 5vw, 40px)", display: "flex", alignItems: "center", justifyContent: "space-between", background: scrollY > 80 ? "rgba(3,3,3,0.92)" : "transparent", backdropFilter: scrollY > 80 ? "blur(20px)" : "none", borderBottom: scrollY > 80 ? "1px solid rgba(255,255,255,0.04)" : "none", transition: "all 0.4s" }}>
-
-        {/* LOGO en el nav */}
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <Logo size={38} color="#39ff8f" />
           <span style={{ fontWeight: 800, fontSize: 18, letterSpacing: "-0.02em" }}>
             Rut<span style={{ color: "#39ff8f" }}>IA</span>
           </span>
         </div>
-
         <div className="desktop-nav" style={{ display: "flex", gap: 36, alignItems: "center" }}>
           {[["Inicio","#inicio"],["Servicios","#servicios"],["Nosotros","#nosotros"],["FAQ","#faq"],["Contacto","#contacto"]].map(([label, href]) => (
             <a key={label} href={href} className="nav-link">{label}</a>
           ))}
           <button className="cta-btn" style={{ padding: "10px 24px", fontSize: 12 }} onClick={() => document.getElementById('contacto').scrollIntoView({ behavior:'smooth' })}>
-            Hablar con un experto
+            Diagnóstico gratis →
           </button>
         </div>
         <button className="mobile-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)} style={{ display: "none", flexDirection: "column", gap: 6, background: "none", border: "none", cursor: "pointer", padding: 4 }}>
@@ -300,18 +297,20 @@ const RutIA = () => {
         <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%", position: "relative", zIndex: 1 }}>
           <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 80, alignItems: "center" }}>
             <div>
+              {/* Badge urgencia */}
               <div className="fade-up delay-1" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(57,255,143,0.08)", border: "1px solid rgba(57,255,143,0.2)", borderRadius: 2, padding: "8px 16px", marginBottom: 28 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#39ff8f" }} className="pulse" />
-                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: "#39ff8f", letterSpacing: "0.15em" }}>TOMAMOS 3 NUEVOS CLIENTES ESTE MES</span>
+                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: "#39ff8f", letterSpacing: "0.15em" }}>QUEDAN 2 CUPOS DE DIAGNÓSTICO ESTA SEMANA</span>
               </div>
 
+              {/* ── H1 ACTUALIZADO ── */}
               <h1 className="hero-title fade-up delay-2" style={{ marginBottom: 32 }}>
-                Automatizá.<br />Escalá.<br />
-                <span style={{ fontStyle: "italic", opacity: 0.6 }}>Dominá.</span>
+                La rutina de<br />tu negocio,<br />rediseñada con{" "}
+                <span style={{ WebkitTextFillColor: "#39ff8f", color: "#39ff8f" }}>IA.</span>
               </h1>
 
               <p className="fade-up delay-3" style={{ fontSize: 17, lineHeight: 1.8, color: "#ccc", maxWidth: 480, marginBottom: 48, fontFamily: "'IBM Plex Mono', monospace", fontWeight: 300 }}>
-                Transformamos procesos lentos en sistemas inteligentes.<br />Soluciones de IA que trabajan por vos, 24/7.
+                Automatizamos las tareas que más tiempo le consumen a tu equipo.<br />Conectado a tus sistemas actuales. Operativo en semanas.
               </p>
 
               <div className="fade-up delay-4 btn-group" style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 52 }}>
@@ -334,7 +333,12 @@ const RutIA = () => {
             </div>
 
             <div className="fade-up delay-4" style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {[{ num: "10×", label: "Más rápido que procesos manuales" },{ num: "98%", label: "Precisión en automatizaciones" },{ num: "24/7", label: "Operación continua sin interrupciones" },{ num: "60%", label: "Reducción de costos operativos" }].map((s, i) => (
+              {[
+                { num: "60hs", label: "Tiempo ahorrado por persona al mes en tareas repetitivas" },
+                { num: "95%", label: "Reducción de errores humanos que retrasan el crecimiento" },
+                { num: "24/7", label: "Opera sin mirar hora ni horario" },
+                { num: "40%", label: "Reducción de costos operativos en atención al cliente" }
+              ].map((s, i) => (
                 <div key={i} className="stat-card" style={{ marginBottom: i < 3 ? 2 : 0 }}>
                   <div style={{ fontSize: 36, fontWeight: 800, color: "#39ff8f", letterSpacing: "-0.03em", marginBottom: 4 }}>{s.num}</div>
                   <div style={{ fontSize: 13, color: "#ccc", fontFamily: "'IBM Plex Mono', monospace", lineHeight: 1.4 }}>{s.label}</div>
@@ -362,20 +366,68 @@ const RutIA = () => {
             ¿Qué podemos<br /><span style={{ color: "#39ff8f" }}>resolver juntos?</span>
           </h2>
           <p style={{ color: "#ccc", fontSize: 15, lineHeight: 1.8, fontFamily: "'IBM Plex Mono', monospace", fontWeight: 300, maxWidth: 360 }}>
-            Cada solución está diseñada para un problema concreto. Sin tecnología por el gusto de la tecnología.
+            Cada solución empieza con un problema concreto tuyo, no con una herramienta nuestra.
           </p>
         </div>
         <div className="services-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
           {[
-            { icon: "⚡", title: "Automatización de procesos", desc: "Eliminamos tareas manuales repetitivas: facturación, reportes, carga de datos, seguimiento de leads. Tu equipo se enfoca en lo que importa." },
-            { icon: "🤖", title: "Chatbots y agentes IA", desc: "Atención al cliente 24/7, calificación de leads, soporte interno. Entrenados con el conocimiento de tu empresa." },
-            { icon: "📊", title: "Análisis e inteligencia", desc: "Dashboards predictivos, detección de anomalías, forecasting de ventas. Decisiones basadas en datos, no en intuición." },
-            { icon: "🔗", title: "Integraciones de LLMs", desc: "Conectamos modelos como GPT-4 o Claude a tus sistemas existentes: CRM, ERP, bases de datos, APIs propias." },
-            { icon: "🧠", title: "Agentes autónomos", desc: "Sistemas que actúan solos: investigan, deciden y ejecutan tareas complejas sin intervención humana constante." },
-            { icon: "📈", title: "Consultoría estratégica", desc: "Auditamos tus procesos y te decimos exactamente dónde la IA genera el mayor retorno. Sin tecnicismos, con números." },
+            {
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#39ff8f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+              ),
+              title: "Automatización de procesos",
+              desc: "Eliminamos tareas manuales repetitivas: facturación, reportes, carga de datos, seguimiento de leads. Tu equipo se enfoca en lo que importa."
+            },
+            {
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#39ff8f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h.01M15 9h.01M9 15h6"/>
+                </svg>
+              ),
+              title: "Asistentes de IA para clientes y equipos",
+              desc: "Atención al cliente 24/7, calificación de leads y soporte interno. Un solo agente entrenado con el conocimiento de tu empresa — sin duplicar herramientas."
+            },
+            {
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#39ff8f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
+                </svg>
+              ),
+              title: "Análisis e inteligencia",
+              desc: "Dashboards predictivos, detección de anomalías, forecasting de ventas. Decisiones basadas en datos, no en intuición."
+            },
+            {
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#39ff8f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                </svg>
+              ),
+              title: "Conexión a tus sistemas",
+              desc: "Integramos IA a lo que ya usás: CRM, ERP, bases de datos, correo, WhatsApp, APIs propias. Sin cambiar tu stack."
+            },
+            {
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#39ff8f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 12l4-4"/><path d="M16 4h4v4"/>
+                </svg>
+              ),
+              title: "Agentes autónomos",
+              desc: "Sistemas que actúan solos: investigan, deciden y ejecutan tareas complejas sin intervención humana constante."
+            },
+            {
+              icon: (
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#39ff8f" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+              ),
+              title: "Diagnóstico de automatización",
+              desc: "Auditamos tus procesos y te decimos exactamente dónde la IA genera el mayor retorno. Sin tecnicismos, con números."
+            },
           ].map((s, i) => (
             <div key={i} className="service-card">
-              <div style={{ fontSize: 28, marginBottom: 16 }}>{s.icon}</div>
+              <div style={{ marginBottom: 20 }}>{s.icon}</div>
               <h3 style={{ fontSize: 18, fontWeight: 700, marginBottom: 12, letterSpacing: "-0.01em" }}>{s.title}</h3>
               <p style={{ color: "#ccc", fontSize: 13, lineHeight: 1.8, fontFamily: "'IBM Plex Mono', monospace", fontWeight: 300 }}>{s.desc}</p>
             </div>
@@ -397,11 +449,11 @@ const RutIA = () => {
               En RutIA no vendemos tecnología por el mero hecho de venderla. Diseñamos soluciones de inteligencia artificial que resuelven problemas reales y generan resultados medibles desde el día uno.
             </p>
             <p style={{ color: "#bbb", fontSize: 15, lineHeight: 1.9, fontFamily: "'IBM Plex Mono', monospace", fontWeight: 300 }}>
-              Somos un equipo obsesionado con la eficiencia, que combina experiencia en ingeniería, diseño de sistemas y estrategia de negocio para entregar automatizaciones que escalan con tu empresa.
+              Combinamos ingeniería de software, diseño de procesos de negocio y experiencia en IA aplicada. No desplegamos una herramienta y nos vamos: acompañamos desde el diagnóstico hasta que el sistema opera solo.
             </p>
           </div>
           <div style={{ paddingTop: 8 }}>
-            {[{ num: "01", title: "Diagnóstico inteligente", desc: "Analizamos tus procesos actuales para identificar exactamente dónde la IA genera mayor impacto." },{ num: "02", title: "Desarrollo a medida", desc: "Construimos soluciones 100% personalizadas. Sin templates genéricos, sin atajos." },{ num: "03", title: "Implementación y soporte", desc: "Acompañamos el lanzamiento y seguimos iterando hasta que el resultado sea perfecto." }].map((item) => (
+            {[{ num: "01", title: "Diagnóstico inteligente", desc: "Analizamos tus procesos actuales para identificar exactamente dónde la IA genera mayor impacto." },{ num: "02", title: "Desarrollo a medida", desc: "Construimos soluciones 100% personalizadas. Sin templates genéricos, sin atajos." },{ num: "03", title: "Implementación y soporte", desc: "Acompañamos el lanzamiento y seguimos iterando hasta que el resultado sea perfecto." }, { num: "04", title: "Tu equipo, en lo que importa", desc: "Cuando la IA se hace cargo de las planillas, los correos repetitivos y los mensajes sin sentido, tu gente puede enfocarse en lo que realmente mueve la empresa. No reemplazamos personas — les devolvemos el tiempo." }].map((item) => (
               <div key={item.num} className="about-block" style={{ marginBottom: 40 }}>
                 <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: "#39ff8f", letterSpacing: "0.2em", marginBottom: 8 }}>{item.num}</div>
                 <h3 style={{ fontSize: 20, fontWeight: 700, marginBottom: 10, letterSpacing: "-0.01em" }}>{item.title}</h3>
@@ -467,7 +519,7 @@ const RutIA = () => {
             <div>
               <div className="section-label">Contacto</div>
               <h2 style={{ fontSize: "clamp(36px, 5vw, 64px)", fontWeight: 800, lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: 32 }}>
-                ¿Listo para<br />transformar tu<br /><span style={{ color: "#39ff8f" }}>negocio?</span>
+                El diagnóstico<br />es gratis. La transformación<br /><span style={{ color: "#39ff8f" }}>empieza en 24 hs.</span>
               </h2>
               <p style={{ color: "#ccc", fontSize: 15, lineHeight: 1.9, fontFamily: "'IBM Plex Mono', monospace", fontWeight: 300, marginBottom: 48 }}>
                 Completá el formulario y en menos de 24hs te contactamos para agendar tu llamada de diagnóstico gratuita. Sin compromiso.
@@ -508,16 +560,13 @@ const RutIA = () => {
       {/* ── FOOTER ── */}
       <footer style={{ padding: "32px clamp(24px, 5vw, 40px)", borderTop: "1px solid rgba(255,255,255,0.04)", background: "#030303" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }} className="footer-grid">
-
-          {/* LOGO en el footer */}
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <Logo size={28} color="#39ff8f" />
             <span style={{ fontWeight: 800, fontSize: 16, letterSpacing: "-0.02em" }}>
               Rut<span style={{ color: "#39ff8f" }}>IA</span>
             </span>
           </div>
-
-          <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: "#333", letterSpacing: "0.15em" }}>© 2025 RUTIA — TODOS LOS DERECHOS RESERVADOS</span>
+          <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, color: "#333", letterSpacing: "0.15em" }}>© 2026 RUTIA — TODOS LOS DERECHOS RESERVADOS</span>
           <div style={{ display: "flex", gap: 24 }}>
             {["LinkedIn","Instagram","Twitter"].map(s => (
               <a key={s} href="#" style={{ color: "#444", fontFamily: "'IBM Plex Mono', monospace", fontSize: 11, textDecoration: "none", letterSpacing: "0.1em", transition: "color 0.2s" }}
