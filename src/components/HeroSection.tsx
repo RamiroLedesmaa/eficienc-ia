@@ -1,5 +1,139 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useEffect, useRef } from "react";
+
+interface Node {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+}
+
+const NeuralNetwork = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const nodesRef = useRef<Node[]>([]);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const animFrameRef = useRef<number>(0);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth * 2;
+      canvas.height = canvas.offsetHeight * 2;
+      ctx.scale(2, 2);
+    };
+    resize();
+
+    const w = canvas.offsetWidth;
+    const h = canvas.offsetHeight;
+    const nodeCount = 35;
+
+    // Initialize nodes
+    nodesRef.current = Array.from({ length: nodeCount }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.6,
+      vy: (Math.random() - 0.5) * 0.6,
+      radius: Math.random() * 2.5 + 1.5,
+    }));
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    };
+    canvas.addEventListener("mousemove", handleMouseMove);
+
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      const nodes = nodesRef.current;
+      const mouse = mouseRef.current;
+
+      // Update positions
+      for (const node of nodes) {
+        node.x += node.vx;
+        node.y += node.vy;
+        if (node.x < 0 || node.x > w) node.vx *= -1;
+        if (node.y < 0 || node.y > h) node.vy *= -1;
+
+        // Mouse attraction
+        const dx = mouse.x - node.x;
+        const dy = mouse.y - node.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 120 && dist > 0) {
+          node.vx += (dx / dist) * 0.02;
+          node.vy += (dy / dist) * 0.02;
+        }
+
+        // Dampen velocity
+        node.vx *= 0.99;
+        node.vy *= 0.99;
+      }
+
+      // Draw connections
+      const connectionDist = 120;
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[i].x - nodes[j].x;
+          const dy = nodes[i].y - nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < connectionDist) {
+            const opacity = (1 - dist / connectionDist) * 0.4;
+            ctx.beginPath();
+            ctx.strokeStyle = `hsla(220, 80%, 46%, ${opacity})`;
+            ctx.lineWidth = 1;
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Draw nodes
+      for (const node of nodes) {
+        const dx = mouse.x - node.x;
+        const dy = mouse.y - node.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const isNearMouse = dist < 100;
+
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, isNearMouse ? node.radius * 1.8 : node.radius, 0, Math.PI * 2);
+        ctx.fillStyle = isNearMouse
+          ? "hsl(220, 80%, 46%)"
+          : "hsla(220, 80%, 46%, 0.5)";
+        ctx.fill();
+
+        if (isNearMouse) {
+          ctx.beginPath();
+          ctx.arc(node.x, node.y, node.radius * 3, 0, Math.PI * 2);
+          ctx.fillStyle = "hsla(220, 80%, 46%, 0.1)";
+          ctx.fill();
+        }
+      }
+
+      animFrameRef.current = requestAnimationFrame(draw);
+    };
+
+    draw();
+
+    return () => {
+      cancelAnimationFrame(animFrameRef.current);
+      canvas.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="w-full h-full rounded-2xl cursor-crosshair"
+      style={{ minHeight: 320 }}
+    />
+  );
+};
 
 const HeroSection = () => {
   return (
@@ -7,11 +141,6 @@ const HeroSection = () => {
       {/* Background decorative elements */}
       <div className="absolute top-20 right-0 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-20 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-
-      {/* Floating decorative circles */}
-      <div className="absolute top-1/4 right-1/4 w-4 h-4 bg-primary/20 rounded-full animate-float" />
-      <div className="absolute top-1/3 right-1/3 w-6 h-6 bg-primary/10 rounded-full animate-float" style={{ animationDelay: "2s" }} />
-      <div className="absolute bottom-1/3 left-1/4 w-3 h-3 bg-primary/15 rounded-full animate-float" style={{ animationDelay: "4s" }} />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
         <div>
@@ -63,22 +192,14 @@ const HeroSection = () => {
           </motion.div>
         </div>
 
-        {/* Right side decorative element */}
+        {/* Neural network animation */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="hidden lg:flex items-center justify-center"
+          className="hidden lg:block"
         >
-          <div className="relative w-80 h-80">
-            <div className="absolute inset-0 bg-primary/10 rounded-full animate-float" />
-            <div className="absolute inset-8 bg-primary/5 rounded-full animate-float" style={{ animationDelay: "1s" }} />
-            <div className="absolute inset-16 bg-primary/10 rounded-full flex items-center justify-center animate-float" style={{ animationDelay: "2s" }}>
-              <svg className="w-20 h-20 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-              </svg>
-            </div>
-          </div>
+          <NeuralNetwork />
         </motion.div>
       </div>
     </section>
