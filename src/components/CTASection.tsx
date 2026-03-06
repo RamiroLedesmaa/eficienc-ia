@@ -21,17 +21,18 @@ const CTASection = () => {
 
           <div className="relative z-10">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-primary-foreground leading-tight mb-6">
-              ¿Listo para transformar tu negocio?
+              ¿Listo para que tu negocio opere en otro nivel?
             </h2>
             <p className="text-lg text-primary-foreground/80 max-w-xl mx-auto mb-10">
-              Agenda una consultoría gratuita y descubre cómo la IA puede
-              revolucionar tu operación en semanas.
+              Contanos en qué parte de tu operación querés ganar tiempo o escala.
+              Una conversación de 30 minutos puede cambiar cómo trabajás el resto
+              del año.
             </p>
             <a
               href="#"
               className="group inline-flex items-center gap-2 bg-foreground text-background px-8 py-4 rounded-full text-base font-semibold hover:opacity-90 transition-all duration-300"
             >
-              Agenda consultorías
+              Hablemos hoy
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </a>
           </div>

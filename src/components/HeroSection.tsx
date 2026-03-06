@@ -27,11 +27,11 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8"
         >
-          Sistematiza tus{" "}
+          Tu negocio trabaja.{" "}
           <br className="hidden md:block" />
-          procesos con{" "}
+          Nosotros hacemos que{" "}
           <span className="text-gradient glow-text">
-            Inteligencia Artificial
+            trabaje solo.
           </span>
         </motion.h1>
 
@@ -41,8 +41,9 @@ const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-12"
         >
-          Transformamos la manera en que operas. Implementamos soluciones de IA
-          que eliminan tareas repetitivas y potencian tu crecimiento.
+          En EficiencIA diseñamos soluciones de Inteligencia Artificial a medida
+          para empresas que quieren crecer sin multiplicar su estructura. Menos
+          fricción, más resultados.
         </motion.p>
 
         <motion.div
@@ -55,14 +56,14 @@ const HeroSection = () => {
             href="#contacto"
             className="group bg-gradient-primary text-primary-foreground px-8 py-4 rounded-full text-base font-semibold hover:opacity-90 transition-all glow-primary inline-flex items-center justify-center gap-2"
           >
-            Agenda consultorías
+            Quiero automatizar mi negocio
             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
           </a>
           <a
-            href="#metodo"
+            href="#servicios"
             className="border border-border hover:border-primary/50 text-foreground px-8 py-4 rounded-full text-base font-medium transition-colors inline-flex items-center justify-center"
           >
-            Conoce nuestro método
+            Conoce nuestros servicios
           </a>
         </motion.div>
       </div>
