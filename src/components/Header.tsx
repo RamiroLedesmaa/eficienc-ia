@@ -6,7 +6,7 @@ import logo from "@/assets/logo-eficiencia.jpeg";
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "Nosotros", href: "#nosotros" },
-  { label: "Nuestro Método", href: "#metodo" },
+  { label: "Servicios", href: "#servicios" },
 ];
 
 const Header = () => {

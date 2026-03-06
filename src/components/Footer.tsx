@@ -14,7 +14,7 @@ const Footer = () => {
         <nav className="flex gap-6 text-sm text-muted-foreground">
           <a href="#home" className="hover:text-foreground transition-colors">Home</a>
           <a href="#nosotros" className="hover:text-foreground transition-colors">Nosotros</a>
-          <a href="#metodo" className="hover:text-foreground transition-colors">Nuestro Método</a>
+          <a href="#servicios" className="hover:text-foreground transition-colors">Servicios</a>
         </nav>
 
         <p className="text-sm text-muted-foreground">
