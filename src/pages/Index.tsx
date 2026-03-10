@@ -1,21 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-
-// ─── Logo SVG component ───────────────────────────────────────────────────────
-const Logo = ({ size = 36, color = "#4A7C3F" }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 250 250"
-    fill="none"
-    style={{ display: "block", flexShrink: 0 }}
-  >
-    <path
-      d="m236.8 106.4c-0.71 0-1.4 0.12-2.05 0.34l-14.11-32.79c1.99-1.66 3.04-4.52 2.11-7.49-1.57-5.18-7.22-6.24-10.82-3.69l-27.07-23.2c1.04-3.05-0.08-7.22-3.56-8.94-4.21-2.02-8.06 0.04-9.79 3.29l-40.34-9.01c-0.69-3.91-3.04-5.9-6.16-5.9h-0.01c-3.8 0-5.74 2.63-6.57 5.56l-42.64 8.02c-1.88-2.74-4.5-4.07-8.06-3.26-4.58 1.09-5.93 5.92-4.96 8.79l-23.68 16.46c-2.86-2.19-7.21-2-9.48 1.45-2.32 3.59-1.3 7.11 0.9 9.43l-15.88 25.37c-4.49-0.66-7.98 2.79-7.58 7.49 0.39 4.06 3.21 6 6.33 6.4l8.55 26.68c-3.2 1.72-4.6 5.67-2.62 9.32 2.82 5.28 9.45 4.01 11.67-0.45l28.6 5.48c0.86 5.82 5.86 7.75 9.5 6.32l15.32 17.56c-2.1 3.64-1.09 7.79 3.04 9.35 4.92 1.9 8.37-1.16 9.34-5.21l24.81-3.15c1.77 4.01 5.45 4.51 8.61 3.85l33.84 43.73c-2.31 3.91-1.51 8.53 3.41 10.47 4.68 1.85 8.69-2.25 8.49-6.25-0.2-3.69-2.61-6.15-5.83-7.24l-2.82-22.25c2.66-1.19 3.79-3.13 4.11-5.59l17.61-4.15c2.08 3.15 5.45 4.48 9.13 2.9 4.49-1.94 4.97-6.31 3.14-9.37l14.65-14c3 1.58 7.49 1.19 9.4-2.87 1.57-3.55 0.16-6.6-2.06-8.55l12.03-31.79c5 0.2 7.3-3.55 7.1-6.89-0.32-3.65-2.62-6.22-5.6-6.22zm-6.11 1.42c-1.13 0.88-1.86 1.94-2.35 2.5l-29.11-2.14c-0.6-1.52-1.25-2.54-2.22-3.1l16.93-29.86c0.89 0.2 1.59 0.2 2.56 0l14.19 32.6zm-21.55-42.69-45.18-0.2c-0.32-0.99-0.81-1.97-1.46-2.76l13.6-18.65c2.58 0.72 4.59 0.1 5.8-0.89l26.83 22.69c0.16 0.3 0.16-0.09 0.41-0.19zm-77.85-35.76 39.46 8.23c0.24 1.38 0.89 2.56 1.7 3.45l-13.68 19.24c-1.53-0.5-3.14-0.5-4.18-0.2l-23.79-30.27c0.16-0.2 0.33-0.3 0.49-0.45zm-8.7 2.96c1.61 0.6 3.54 0.6 4.89-0.19l22.31 30.08c-0.24 0.3-0.4 0.69-0.56 1.08l-38.78-8.13c-0.48-1.33-1.09-2.42-1.82-3.3l13.96-19.54zm-45.15 4.58 41.19-7.73c0 0.59 0.17 0.98 0.33 1.48l-13.76 18.16c-2.74-0.79-5.32-0.1-7.09 1.47l-20.92-12.4c0.08-0.29 0.16-0.59 0.25-0.98zm-12.21 4.83c1.27 0.89 2.5 1.39 3.94 1.49l11.87 41.66-0.81 0.69-37.55-24.7c0.08-1.18-0.08-2.56-0.81-3.35l23.36-15.79zm-46.78 61.69 1.35-0.79 20.03 8.51c-0.32 1.94 0.08 3.78 0.81 5.06l-12.8 14.7c-0.97-0.49-1.94-0.69-2.75-0.69l-8.05-26.2c0.61-0.29 1.01-0.49 1.41-0.59zm41.29 38.57-27.31-5.48c-0.08-1.28-0.48-2.46-1.09-3.45l12.59-14.89c1.53 0.79 3.3 1.08 4.75 0.69l12.51 21.65c-0.73 0.3-1.21 0.79-1.45 1.48zm-8.34-34.18c-1.35-1.38-2.97-2.07-4.49-2.17l-7.97-39.54 1.34-0.88 38.16 24.7c-0.16 0.89-0.08 1.97 0.24 2.86l-27.28 15.03zm13.59 30.13-12.11-20.76c1.45-1.94 1.77-4.2 1.05-6.24l26.06-14.4 0.81 0.69-14.72 40.71c-0.29-0.1-0.69-0.1-1.09 0zm6.55 1.73 13.59-41.66c3.12 0.1 5.34-1.08 6.46-1.87l26.15 14.8c-0.24 0.79-0.4 1.67-0.4 2.56l-44.19 26.37c-0.48-0.2-1.05-0.3-1.61-0.2zm15.11-55.28-13.01-43.15 0.89-0.79 22.23 13.68c-0.48 2.55 0 5.01 1.37 6.74l-11.48 23.52zm3.38 81.98-17.6-17.76c0.8-1.63 0.8-3.2 0.4-4.58l45.97-25.27-26.97 47.71c-0.56-0.2-1.24-0.2-1.8-0.1zm6.26 3.55-1.25-1.74 27.71-48.43 2.3 42.57c-3.37 1.18-4.25 3.64-4.58 5.37l-24.18 2.23zm23.78-63.19-27.96-14.84c0.65-2.76-0.32-4.8-1.77-6.08l12.36-23.4c0.73 0.1 1.37 0 1.94-0.2l15.99 43.93-0.56 0.59zm5.43-0.79c-0.73-0.19-1.46-0.19-2.27-0.1l-15.4-45.12c0.64-0.59 1.13-1.28 1.45-1.97l40.19 8.33c0.32 1.18 0.73 2.17 1.37 2.96l-25.34 35.9zm5.14 3.91-0.56-1.18 24.19-35.31c2.01 0.88 4.26 0.88 5.79 0.09l26.38 32.79c-0.48 0.59-0.81 1.28-1.05 2.07l-54.75 1.54zm36.29 104.4-32.28-40.32 23.71 11.11c-0.48 4.15 1.78 7.5 5.6 8.29l2.97 20.92zm-4.88-33.57c-1.53 0.2-2.8 0.79-3.84 1.88l-23.72-13.37c-0.24-0.89-0.64-1.67-1.21-2.36l32.45-16.36c0.72 0.59 1.45 1.08 2.34 1.38l-6.02 28.83zm4.88-40.45-34.78-24.5 0.49-0.99 52.75-1.94c0.4 1.08 0.97 1.97 1.86 2.66l-14.56 23.39c-2.17-0.69-4.18-0.1-5.76 1.38zm4.27 42.03c-0.97-1.94-2.32-3.02-3.51-3.51l5.25-26.66 1.61-0.5 14.91 23.6c-0.97 1.18-1.62 2.47-1.78 3.95l-16.48 3.12zm38.63-112 1.05 2.94-17.68 30.35c-1.35-0.3-2.8-0.3-4.07 0.1l-25.17-33.39 0.65-1.38 43.53 1.09c0.4 0 1.04 0.1 1.69 0.29zm-13.79 103.6c-0.97-0.39-2.14-0.59-3.31-0.49l-14.83-23.5 0.48-0.89 32.82 7.44c0.33 1.18 0.89 2.27 1.54 3.06l-13.83 14.49c-0.81-0.3-1.86-0.4-2.87-0.11zm15.89-21.2-33.63-8.03c0-1.84-0.56-3.52-1.61-4.8l14.04-22.99c1.16 0.3 2.21 0.3 3.1 0l18.67 34.06c-0.57 0.49-0.73 1.08-0.57 1.76zm7.73-3.74c-0.57-0.1-1.13-0.2-1.7-0.2l-20.1-34.06c0.89-0.79 1.54-1.87 1.94-2.96l28.79 3.06c0.48 1.94 1.62 3.32 3.06 4.11l-11.99 30.05z"
-      fill={color}
-    />
-  </svg>
-);
+import rutIaLogo from "@/assets/rutIaLogo.svg";
 
 const RutIAAgro = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -37,7 +21,7 @@ const RutIAAgro = () => {
     if (!formData.name || !formData.email) return;
     setSending(true);
     try {
-      const res = await fetch("https://formspree.io/f/xnjgqdvq", {
+      const res = await fetch("https://formspree.io/f/mwvrlekb", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ name: formData.name, email: formData.email, message: formData.message }),
@@ -72,8 +56,12 @@ const RutIAAgro = () => {
 
         .nav-link { color: #5C3D2E; text-decoration: none; font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.3s; font-family: 'Lora', serif; }
         .nav-link:hover { color: #4A7C3F; }
+        .nav-logo-strip { display: flex; align-items: center; }
+        .nav-logo-strip img { display: block; width: 124px; height: auto; }
 
-        .hero-title { font-size: clamp(40px, 6vw, 88px); font-weight: 800; line-height: 1.05; letter-spacing: -0.04em; font-family: 'Bricolage Grotesque', sans-serif; background: linear-gradient(135deg, #2C1A0E 0%, #4A2C1A 55%, #4A7C3F 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .hero-copy { display: flex; flex-direction: column; align-items: flex-start; text-align: left; }
+        .hero-title { font-size: clamp(52px, 7.8vw, 108px); font-weight: 800; line-height: 0.95; letter-spacing: -0.06em; font-family: 'Bricolage Grotesque', sans-serif; color: #2C1A0E; max-width: 9ch; text-wrap: balance; }
+        .hero-title-accent { color: #4A7C3F; }
 
         .grid-bg { position: absolute; inset: 0; background-image: linear-gradient(rgba(74,124,63,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(74,124,63,0.07) 1px, transparent 1px); background-size: 60px 60px; mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 100%); }
 
@@ -87,7 +75,7 @@ const RutIAAgro = () => {
         .cta-btn:hover { background: #2C1A0E; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(74,124,63,0.25); }
         .cta-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-        .outline-btn { background: transparent; color: #4A7C3F; border: 1px solid rgba(74,124,63,0.5); padding: 16px 40px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; border-radius: 1px; }
+        .outline-btn { background: transparent; color: #4A7C3F; border: 1px solid rgba(74,124,63,0.5); padding: 14px 40px 12px; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 600; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: all 0.2s; border-radius: 1px; }
         .outline-btn:hover { border-color: #4A7C3F; background: rgba(74,124,63,0.08); }
 
         .service-tag { display: inline-block; border: 1px solid rgba(74,124,63,0.25); color: #4A7C3F; padding: 6px 16px; font-family: 'Lora', serif; font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; margin: 4px; border-radius: 1px; transition: all 0.2s; }
@@ -145,21 +133,24 @@ const RutIAAgro = () => {
           .desktop-nav { display: none !important; }
           .mobile-menu-btn { display: flex !important; }
           .nav-logo-text { font-size: 20px !important; }
-          .hero-title { font-size: clamp(32px, 8vw, 48px) !important; }
-          .hero-section { padding: 88px 20px 48px !important; }
+          .nav-logo-strip img { width: 104px !important; }
+          .hero-title { font-size: clamp(40px, 10vw, 56px) !important; }
+          .hero-section { padding: 112px 20px 48px !important; }
           .footer-grid { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; }
           .stat-card { padding: 20px !important; }
           .service-tag { font-size: 10px !important; padding: 5px 12px !important; }
           .services-grid { grid-template-columns: 1fr !important; }
           .testimonials-grid { grid-template-columns: 1fr !important; }
           .cta-btn { padding: 14px 28px !important; font-size: 12px !important; max-width: 85% !important; }
-          .outline-btn { padding: 12px 24px !important; font-size: 12px !important; max-width: 85% !important; }
+          .outline-btn { padding: 11px 24px 10px !important; font-size: 12px !important; max-width: 85% !important; }
+          .btn-group { width: 100% !important; justify-content: center !important; }
+          .btn-group .cta-btn, .btn-group .outline-btn { margin-inline: auto !important; }
           .hero-badge { font-size: 10px !important; padding: 6px 12px !important; }
-          .hero-subtitle { font-size: 15px !important; margin-bottom: 32px !important; }
+          .hero-subtitle { font-size: 15px !important; margin-bottom: 32px !important; font-weight: 500 !important; letter-spacing: -0.02em !important; }
         }
         @media (max-width: 480px) {
-          .hero-title { font-size: clamp(28px, 8vw, 38px) !important; }
-          .btn-group { flex-direction: column !important; align-items: flex-start !important; gap: 10px !important; }
+          .hero-title { font-size: clamp(36px, 11vw, 46px) !important; }
+          .btn-group { flex-direction: column !important; align-items: center !important; gap: 10px !important; }
           .btn-group .cta-btn, .btn-group .outline-btn { max-width: 100% !important; width: 100% !important; text-align: center !important; }
           .steps-row { flex-direction: column !important; gap: 20px !important; }
         }
@@ -168,12 +159,9 @@ const RutIAAgro = () => {
       <div className="noise-overlay" />
 
       {/* ── NAV ── */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "20px clamp(24px, 5vw, 40px)", display: "flex", alignItems: "center", justifyContent: "space-between", background: scrollY > 80 ? "rgba(245,240,232,0.95)" : "transparent", backdropFilter: scrollY > 80 ? "blur(20px)" : "none", borderBottom: scrollY > 80 ? "1px solid rgba(44,26,14,0.08)" : "none", transition: "all 0.4s" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <Logo size={38} color="#4A7C3F" />
-          <span className="nav-logo-text" style={{ fontWeight: 800, fontSize: 18, letterSpacing: "-0.02em", color: "#2C1A0E" }}>
-            Rut<span style={{ color: "#4A7C3F" }}>IA</span> Agro
-          </span>
+      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, padding: "14px clamp(24px, 5vw, 40px) 30px", display: "flex", alignItems: "center", justifyContent: "space-between", background: scrollY > 80 ? "rgba(245,240,232,0.95)" : "transparent", backdropFilter: scrollY > 80 ? "blur(20px)" : "none", borderBottom: scrollY > 80 ? "1px solid rgba(44,26,14,0.08)" : "none", transition: "all 0.4s" }}>
+        <div className="nav-logo-strip">
+          <img src={rutIaLogo} alt="RutIA logo wordmark" />
         </div>
         <div className="desktop-nav" style={{ display: "flex", gap: 36, alignItems: "center" }}>
           {[["Inicio","#inicio"],["Servicios","#servicios"],["Nosotros","#nosotros"],["FAQ","#faq"],["Contacto","#contacto"]].map(([label, href]) => (
@@ -199,14 +187,14 @@ const RutIAAgro = () => {
       )}
 
       {/* ── HERO ── */}
-      <section id="inicio" ref={heroRef} className="hero-section" style={{ minHeight: "100vh", position: "relative", display: "flex", alignItems: "center", padding: "120px clamp(24px, 5vw, 40px) 80px", overflow: "hidden" }}>
+      <section id="inicio" ref={heroRef} className="hero-section" style={{ minHeight: "100vh", position: "relative", display: "flex", alignItems: "center", padding: "148px clamp(24px, 5vw, 40px) 80px", overflow: "hidden" }}>
         <div className="grid-bg" />
         <div style={{ position: "absolute", top: 120, right: 40, width: 180, height: 180, border: "1px solid rgba(74,124,63,0.1)", borderRadius: "50%" }} />
         <div style={{ position: "absolute", top: 140, right: 60, width: 140, height: 140, border: "1px solid rgba(74,124,63,0.07)", borderRadius: "50%" }} />
 
         <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%", position: "relative", zIndex: 1 }}>
-          <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 80, alignItems: "center" }}>
-            <div>
+          <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 400px", gap: 56, alignItems: "center" }}>
+            <div className="hero-copy">
               {/* Badge urgencia */}
               <div className="fade-up delay-1 hero-badge" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "rgba(74,124,63,0.08)", border: "1px solid rgba(74,124,63,0.22)", borderRadius: 2, padding: "8px 16px", marginBottom: 28 }}>
                 <div style={{ width: 6, height: 6, borderRadius: "50%", background: "#4A7C3F" }} className="pulse" />
@@ -214,11 +202,15 @@ const RutIAAgro = () => {
               </div>
 
               <h1 className="hero-title fade-up delay-2" style={{ marginBottom: 32 }}>
-                El campo que<br />manejás,<br />potenciado con{" "}
-                <span style={{ WebkitTextFillColor: "#4A7C3F", color: "#4A7C3F" }}>IA.</span>
+                El campo que
+                <br />
+                manejás,
+                <br />
+                potenciado con{" "}
+                <span className="hero-title-accent">IA.</span>
               </h1>
 
-              <p className="fade-up delay-3 hero-subtitle" style={{ fontSize: 17, lineHeight: 1.8, color: "#5C3D2E", maxWidth: 480, marginBottom: 48, fontFamily: "'Lora', serif", fontWeight: 300 }}>
+              <p className="fade-up delay-3 hero-subtitle" style={{ fontSize: 17, lineHeight: 1.8, color: "#5C3D2E", maxWidth: 480, marginBottom: 48, fontFamily: "'Lora', serif", fontWeight: 500, letterSpacing: "-0.02em" }}>
                 Automatizamos los procesos que más tiempo le consumen a tu campo.<br />Conectado a tus sistemas actuales. Operativo en semanas.
               </p>
 
@@ -233,14 +225,14 @@ const RutIAAgro = () => {
 
             </div>
 
-            <div className="fade-up delay-4" style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+            <div className="fade-up delay-4" style={{ display: "flex", flexDirection: "column", gap: 2, marginTop: -12 }}>
               {[
                 { num: "60hs", label: "Tiempo ahorrado por persona al mes en tareas repetitivas" },
                 { num: "95%", label: "Reducción de errores humanos que retrasan el crecimiento" },
                 { num: "24/7", label: "Opera sin mirar hora ni horario" },
                 { num: "40%", label: "Reducción de costos operativos en atención al cliente" }
               ].map((s, i) => (
-                <div key={i} className="stat-card" style={{ marginBottom: i < 3 ? 2 : 0 }}>
+                <div key={i} className="stat-card" style={{ marginBottom: i < 3 ? 2 : 0, paddingTop: i === 0 ? 24 : 32 }}>
                   <div style={{ fontSize: 36, fontWeight: 800, color: "#4A7C3F", letterSpacing: "-0.03em", marginBottom: 4 }}>{s.num}</div>
                   <div style={{ fontSize: 13, color: "#5C3D2E", fontFamily: "'Lora', serif", lineHeight: 1.4 }}>{s.label}</div>
                 </div>
@@ -448,7 +440,7 @@ const RutIAAgro = () => {
       <footer style={{ padding: "32px clamp(24px, 5vw, 40px)", borderTop: "1px solid rgba(44,26,14,0.08)", background: "#EDE8DC" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 16 }} className="footer-grid">
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <Logo size={28} color="#4A7C3F" />
+            <img src={rutIaLogo} alt="RutIA logo wordmark" style={{ width: 82, height: "auto", display: "block" }} />
             <span style={{ fontWeight: 800, fontSize: 16, letterSpacing: "-0.02em", color: "#2C1A0E" }}>
               Rut<span style={{ color: "#4A7C3F" }}>IA</span> Agro
             </span>
