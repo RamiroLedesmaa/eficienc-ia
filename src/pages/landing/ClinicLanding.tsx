@@ -48,15 +48,6 @@ const stats = [
   { num: "40%", label: "Reduccion de costos operativos en administracion y recepcion" },
 ];
 
-const specialties = [
-  "Automatizacion de procesos",
-  "Chatbots con IA",
-  "Historia clinica digital",
-  "Agenda inteligente",
-  "Integracion WhatsApp",
-  "Facturacion automatica",
-];
-
 const ClinicLanding = () => {
   const [scrollY, setScrollY] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,7 +57,9 @@ const ClinicLanding = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -210,44 +203,120 @@ const ClinicLanding = () => {
         .mobile-overlay {
           position: fixed;
           inset: 0;
-          z-index: 48;
-          background: rgba(23,49,46,0.18);
-          backdrop-filter: blur(6px);
-          animation: fadeIn 0.22s ease forwards;
+          z-index: 60;
+          background: rgba(23,49,46,0.22);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         .mobile-drawer {
           position: fixed;
           inset: 0 0 0 auto;
-          z-index: 49;
-          width: min(340px, 84vw);
-          padding: 96px 18px 24px;
-          background: rgba(255,255,255,0.96);
-          border-left: 1px solid rgba(23,49,46,0.08);
-          box-shadow: -24px 0 60px rgba(23,49,46,0.12);
-          backdrop-filter: blur(20px);
+          z-index: 61;
+          width: min(360px, 88vw);
+          background: rgba(255,255,255,0.97);
+          border-left: 1px solid rgba(23,49,46,0.06);
+          box-shadow: -32px 0 80px rgba(23,49,46,0.15);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
           transform: translateX(100%);
-          animation: slideInRight 0.26s ease forwards;
+          animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          display: flex;
+          flex-direction: column;
+        }
+        .mobile-drawer::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 3px;
+          background: linear-gradient(180deg, #1F6B68, rgba(31,107,104,0.08));
+        }
+        .mobile-drawer-header {
+          padding: 22px 24px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .mobile-close-btn {
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 14px;
+          border: 1px solid rgba(23,49,46,0.1);
+          background: rgba(247,251,250,0.8);
+          color: #17312E;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+        .mobile-close-btn:hover {
+          background: rgba(31,107,104,0.08);
+          border-color: rgba(31,107,104,0.2);
         }
         .mobile-panel-inner {
-          display: grid;
-          gap: 6px;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          padding: 12px 20px 32px;
+          gap: 2px;
         }
         .mobile-link {
-          display: block;
-          padding: 14px 16px;
-          border-radius: 18px;
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 18px 16px;
+          border-radius: 16px;
           color: #17312E;
           text-decoration: none;
-          font-size: 15px;
+          font-size: 17px;
           font-weight: 700;
           letter-spacing: -0.01em;
+          position: relative;
+          opacity: 0;
+          transform: translateX(20px);
+          animation: slideItemIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+          transition: background 0.2s ease, color 0.2s ease;
+        }
+        .mobile-link:nth-child(1) { animation-delay: 0.08s; }
+        .mobile-link:nth-child(2) { animation-delay: 0.14s; }
+        .mobile-link:nth-child(3) { animation-delay: 0.20s; }
+        .mobile-link::before {
+          content: '';
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: rgba(31,107,104,0.25);
+          flex-shrink: 0;
+          transition: all 0.2s ease;
         }
         .mobile-link:hover {
-          background: rgba(31,107,104,0.08);
+          background: rgba(31,107,104,0.06);
+          color: #1F6B68;
         }
-        .mobile-drawer .primary-btn {
+        .mobile-link:hover::before {
+          background: #1F6B68;
+          box-shadow: 0 0 8px rgba(31,107,104,0.3);
+        }
+        .mobile-drawer-footer {
+          padding: 0 20px 32px;
+          opacity: 0;
+          transform: translateY(12px);
+          animation: slideItemIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.28s forwards;
+        }
+        .mobile-drawer-footer .primary-btn {
           width: 100%;
-          margin-top: 6px;
+        }
+        .mobile-drawer-divider {
+          height: 1px;
+          margin: 8px 20px 20px;
+          background: linear-gradient(90deg, rgba(31,107,104,0.15), transparent);
+        }
+        @keyframes slideItemIn {
+          from { opacity: 0; transform: translateX(20px); }
+          to { opacity: 1; transform: translateX(0); }
         }
 
         /* ── BUTTONS ── */
@@ -289,7 +358,7 @@ const ClinicLanding = () => {
         /* ── TYPOGRAPHY ── */
         .hero-title,
         .section-title {
-          font-size: clamp(48px, 7vw, 100px);
+          font-size: clamp(54px, 8vw, 116px);
           font-weight: 800;
           line-height: 0.94;
           letter-spacing: -0.06em;
@@ -307,11 +376,11 @@ const ClinicLanding = () => {
           font-weight: 600;
           color: #1F6B68;
           display: inline-block;
-          margin-left: -0.04em;
+          margin-left: 0.1em;
         }
         .hero-summary {
           color: #17312E;
-          font-size: 17px;
+          font-size: 19px;
           font-weight: 600;
           line-height: 1.8;
           max-width: 520px;
@@ -319,14 +388,14 @@ const ClinicLanding = () => {
         }
         .section-copy {
           color: #17312E;
-          font-size: 17px;
+          font-size: 19px;
           font-weight: 500;
           line-height: 1.8;
         }
         .section-copy-mono {
           color: rgba(23,49,46,0.78);
           font-family: 'Manrope', sans-serif;
-          font-size: 15px;
+          font-size: 17px;
           font-weight: 400;
           line-height: 1.9;
         }
@@ -386,45 +455,9 @@ const ClinicLanding = () => {
         }
         .stat-label {
           color: rgba(23,49,46,0.7);
-          font-size: 13px;
+          font-size: 15px;
           font-weight: 500;
           line-height: 1.5;
-        }
-
-        /* ── SPECIALTY TAGS ── */
-        .specialties-bar {
-          margin-top: 72px;
-          padding-top: 40px;
-          border-top: 1px solid rgba(23,49,46,0.08);
-          display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 10px;
-        }
-        .specialties-label {
-          font-family: 'Manrope', sans-serif;
-          font-size: 11px;
-          color: rgba(23,49,46,0.5);
-          letter-spacing: 0.2em;
-          margin-right: 8px;
-          text-transform: uppercase;
-        }
-        .specialty-tag {
-          display: inline-block;
-          border: 1px solid rgba(31,107,104,0.18);
-          color: #1F6B68;
-          padding: 8px 16px;
-          font-family: 'Manrope', sans-serif;
-          font-size: 11px;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          border-radius: 999px;
-          transition: all 0.2s ease;
-          font-weight: 600;
-        }
-        .specialty-tag:hover {
-          background: rgba(31,107,104,0.06);
-          border-color: rgba(31,107,104,0.35);
         }
 
         /* ── MODULE CARDS ── */
@@ -475,7 +508,7 @@ const ClinicLanding = () => {
         .module-copy {
           color: rgba(23,49,46,0.82);
           font-family: 'Manrope', sans-serif;
-          font-size: 14.5px;
+          font-size: 16px;
           font-weight: 400;
           line-height: 1.7;
         }
@@ -525,7 +558,7 @@ const ClinicLanding = () => {
         .about-copy {
           color: rgba(23,49,46,0.82);
           font-family: 'Manrope', sans-serif;
-          font-size: 14.5px;
+          font-size: 16px;
           font-weight: 400;
           line-height: 1.8;
         }
@@ -557,7 +590,7 @@ const ClinicLanding = () => {
           outline: none;
           transition: border-color 0.2s ease, box-shadow 0.2s ease;
           font-family: 'Manrope', sans-serif;
-          font-size: 14px;
+          font-size: 16px;
           margin-bottom: 18px;
         }
         .input-field:focus,
@@ -600,7 +633,7 @@ const ClinicLanding = () => {
         }
         .faq-answer {
           color: rgba(23,49,46,0.78);
-          font-size: 15px;
+          font-size: 17px;
           line-height: 1.8;
           font-weight: 500;
           padding-bottom: 24px;
@@ -659,13 +692,64 @@ const ClinicLanding = () => {
           .secondary-btn { width: 100%; }
           .hero-title,
           .section-title { max-width: none; }
-          .specialties-bar { justify-content: center; }
-          .specialties-label { width: 100%; text-align: center; }
         }
       `}</style>
 
       <WavePlane />
       <div className="grain" />
+
+      {isMenuOpen && (
+        <>
+          <button
+            type="button"
+            className="mobile-overlay"
+            aria-label="Cerrar menu"
+            onClick={() => setIsMenuOpen(false)}
+          />
+          <div className="mobile-drawer">
+            <div className="mobile-drawer-header">
+              <a href="#inicio" className="logo-link" onClick={() => setIsMenuOpen(false)} aria-label="Ir al inicio">
+                <img src={rutIaLogo} alt="RutIA" style={{ width: 88 }} />
+              </a>
+              <button
+                className="mobile-close-btn"
+                onClick={() => setIsMenuOpen(false)}
+                aria-label="Cerrar menu"
+              >
+                <X size={18} strokeWidth={2.2} />
+              </button>
+            </div>
+            <div className="mobile-panel-inner">
+              {[
+                ["Servicios", "#servicios"],
+                ["Nosotros", "#nosotros"],
+                ["Contacto", "#contacto"],
+              ].map(([label, href]) => (
+                <a
+                  key={label}
+                  href={href}
+                  className="mobile-link"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {label}
+                </a>
+              ))}
+            </div>
+            <div className="mobile-drawer-divider" />
+            <div className="mobile-drawer-footer">
+              <button
+                className="primary-btn"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                Hablemos
+              </button>
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="page-shell">
         <div className="ambient-grid" />
@@ -687,7 +771,7 @@ const ClinicLanding = () => {
         >
           <div className="header-shell">
             <a href="#inicio" className="logo-link" aria-label="Ir al inicio">
-              <img src={rutIaLogo} alt="RutIA" />
+              <img src={rutIaLogo} alt="RutIA - Automatizacion con inteligencia artificial para clinicas" />
             </a>
 
             <div className="desktop-nav">
@@ -716,43 +800,6 @@ const ClinicLanding = () => {
               {isMenuOpen ? <X size={20} strokeWidth={2.2} /> : <Menu size={20} strokeWidth={2.2} />}
             </button>
           </div>
-          {isMenuOpen && (
-            <>
-              <button
-                type="button"
-                className="mobile-overlay"
-                aria-label="Cerrar menu"
-                onClick={() => setIsMenuOpen(false)}
-              />
-              <div className="mobile-drawer">
-                <div className="mobile-panel-inner">
-                {[
-                  ["Servicios", "#servicios"],
-                  ["Nosotros", "#nosotros"],
-                  ["Contacto", "#contacto"],
-                ].map(([label, href]) => (
-                  <a
-                    key={label}
-                    href={href}
-                    className="mobile-link"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {label}
-                  </a>
-                ))}
-                <button
-                  className="primary-btn"
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    document.getElementById("contacto")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                >
-                  Hablemos
-                </button>
-                </div>
-              </div>
-            </>
-          )}
         </nav>
 
         {/* ── HERO ── */}
@@ -781,11 +828,11 @@ const ClinicLanding = () => {
                   <br />
                   <em>rediseñada</em>
                   <br />
-                  con IA.
+                  <span style={{ marginLeft: "0.1em" }}>con IA.</span>
                 </h1>
 
                 <p className="hero-summary fade-up delay-2">
-                  Automatizamos las tareas que mas tiempo te consumen a vos y a tu equipo.
+                  Automatizamos turnos, historia clinica, facturacion y WhatsApp de tu clinica con inteligencia artificial.
                   Conectado a tu forma de trabajar. Operativo en semanas.
                 </p>
 
@@ -828,9 +875,9 @@ const ClinicLanding = () => {
           <div className="section-tag">Servicios</div>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 8, flexWrap: "wrap", gap: 24 }}>
             <h2 className="section-title">
-              ¿Que podemos
+              Automatizacion con IA
               <br />
-              <em>resolver juntos?</em>
+              <em>para tu clinica</em>
             </h2>
             <p className="section-copy-mono" style={{ maxWidth: 380 }}>
               Cada solucion empieza con un problema concreto tuyo, no con una herramienta nuestra.
