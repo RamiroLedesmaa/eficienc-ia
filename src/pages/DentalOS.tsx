@@ -168,7 +168,7 @@ const DentalOS = () => {
         color: "#17312E",
         minHeight: "100vh",
         overflowX: "hidden",
-        paddingTop: "60px",
+        paddingTop: "100px",
       }}
     >
       <WavePlane />
@@ -193,10 +193,10 @@ const DentalOS = () => {
           alignItems: "center",
           justifyContent: "space-between",
         }}>
-          <img src={dentalosLogo} alt="DentalOS" style={{ height: "112px", width: "auto" }} />
+          <img src={dentalosLogo} alt="DentalOS" className="h-16 md:h-28 w-auto" />
           <button
             onClick={openCalPopup}
-            className="primary-btn"
+            className="primary-btn hidden md:inline-block"
             style={{ padding: "14px 24px", fontSize: 13, letterSpacing: "0.08em" }}
           >
             AGENDAR AHORA
@@ -544,7 +544,7 @@ const DentalOS = () => {
           display: flex;
           align-items: center;
           gap: 8px;
-          white-space: nowrap;
+          white-space: normal;
         }
 
         /* ── FAQ ── */
@@ -640,6 +640,10 @@ const DentalOS = () => {
           .secondary-btn { width: 100%; }
           .hero-title,
           .section-title { max-width: none; }
+          .stat-num { font-size: 32px !important; }
+          .stat-label { font-size: 13px; }
+          .section-padding { padding-top: 64px !important; padding-bottom: 64px !important; }
+          .page-shell { padding-bottom: 72px; }
         }
       `}</style>
 
@@ -763,7 +767,7 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── EL PROBLEMA ── */}
-        <section style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
+        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
           <div className="section-tag">El problema</div>
           <h2 className="section-title">
             Los consultorios
@@ -787,7 +791,7 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── ANTES / DESPUÉS ── */}
-        <section style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
+        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
           <div className="section-tag">La solución</div>
           <h2 className="section-title">
             Antes y después
@@ -818,7 +822,7 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── FEATURES ── */}
-        <section style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
+        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
           <div
             className="features-layout"
             style={{
@@ -857,7 +861,7 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── PRUEBA SOCIAL ── */}
-        <section style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
+        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
           <div className="section-tag">Resultados</div>
           <h2 className="section-title">
             Resultados
@@ -868,7 +872,7 @@ const DentalOS = () => {
             Primeros 30 días de piloto.
           </p>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }} className="modules-grid">
+          <div className="modules-grid">
             {heroStats.map((stat) => (
               <div key={stat.num} className="stat-card" style={{ padding: "36px 28px", textAlign: "center" }}>
                 <div className="stat-num" style={{ fontSize: 48, marginBottom: 10 }}>{stat.num}</div>
@@ -890,7 +894,7 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── FAQ ── */}
-        <section style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 860, margin: "0 auto" }}>
+        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 860, margin: "0 auto" }}>
           <div className="section-tag">FAQ</div>
           <h2 className="section-title" style={{ marginBottom: 48 }}>
             Las dudas que
@@ -924,7 +928,7 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── CTA FINAL ── */}
-        <section style={{ padding: "120px clamp(24px, 5vw, 42px) 92px", textAlign: "center" }}>
+        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px) 92px", textAlign: "center" }}>
           <div style={{ maxWidth: 700, margin: "0 auto" }}>
             <div className="section-tag" style={{ justifyContent: "center" }}>Demo</div>
             <h2 className="section-title" style={{ maxWidth: "none", margin: "0 auto 24px" }}>
