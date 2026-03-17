@@ -186,14 +186,11 @@ const DentalOS = () => {
         borderBottom: scrollY > 40 ? "1px solid rgba(23,49,46,0.08)" : "none",
         transition: "all 0.25s ease",
       }}>
-        <div style={{
+        <div className="flex items-center justify-center md:justify-between" style={{
           maxWidth: 1200,
           margin: "0 auto",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
         }}>
-          <img src={dentalosLogo} alt="DentalOS" className="h-16 md:h-28 w-auto" />
+          <img src={dentalosLogo} alt="DentalOS" className="h-24 md:h-28 w-auto" />
           <button
             onClick={openCalPopup}
             className="primary-btn hidden md:inline-block"
@@ -250,7 +247,6 @@ const DentalOS = () => {
           box-shadow: 0 18px 45px rgba(31,107,104,0.24);
           transition: transform 0.2s ease, box-shadow 0.2s ease;
           text-decoration: none;
-          display: inline-block;
           text-align: center;
         }
         .primary-btn:hover {
@@ -633,7 +629,7 @@ const DentalOS = () => {
         }
 
         @media (max-width: 768px) {
-          .sticky-cta-mobile { display: block; }
+          .sticky-cta-mobile { display: none; }
           .modules-grid { grid-template-columns: 1fr; }
           .hero-cta-group { width: 100%; }
           .primary-btn,
