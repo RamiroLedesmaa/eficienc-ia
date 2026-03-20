@@ -1,5 +1,5 @@
 import { ChevronDown } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import dentalosLogo from "@/assets/dentalos-logo.svg";
 import WavePlane from "@/components/WavePlane";
 
@@ -23,6 +23,10 @@ const faqs = [
   {
     q: "¿Cuánto tarda la implementación?",
     a: "Entre 7 y 15 días para la Fase 1. La hace el fundador personalmente, con onboarding activo durante los primeros 15 días.",
+  },
+  {
+    q: "¿Cuánto cuesta DentalOS?",
+    a: "Antes del precio, la pregunta real es: ¿cuánto te está costando NO tenerlo? Un consultorio con 100 pacientes/día pierde más de $6.000.000/mes en horas administrativas. En la demo hacemos el cálculo con tus números reales y te damos la inversión exacta.",
   },
   {
     q: "¿Funciona para clínicas con varios profesionales?",
@@ -85,60 +89,19 @@ const features = [
   },
 ];
 
-const heroStats = [
-  { num: "68%", label: "turnos confirmados automáticamente sin intervención humana" },
-  { num: "90 seg", label: "tiempo de respuesta promedio del agente WhatsApp 24/7" },
-  { num: "~6 hs", label: "semanales recuperadas por la odontóloga" },
-];
 
 const DentalOS = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [calVisible, setCalVisible] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+  const [leadFormData, setLeadFormData] = useState({ nombre: "", whatsapp: "", pacientes: "" });
+  const [leadSending, setLeadSending] = useState(false);
+  const [leadSubmitted, setLeadSubmitted] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-  const videoRef = useRef<HTMLDivElement>(null);
-  const calSectionRef = useRef<HTMLDivElement>(null);
-
-  // Start 90s timer when video enters viewport
-  useEffect(() => {
-    const videoEl = videoRef.current;
-    if (!videoEl) return;
-
-    let timer: ReturnType<typeof setTimeout> | null = null;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !timer) {
-          timer = setTimeout(() => {
-            setCalVisible(true);
-          }, 90000);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(videoEl);
-
-    return () => {
-      observer.disconnect();
-      if (timer) clearTimeout(timer);
-    };
-  }, []);
-
-  // Scroll to calendar section when it becomes visible
-  useEffect(() => {
-    if (calVisible && calSectionRef.current) {
-      setTimeout(() => {
-        calSectionRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      }, 100);
-    }
-  }, [calVisible]);
-
   // Load Cal.com popup script on mount
   useEffect(() => {
     const script = document.createElement("script");
@@ -658,20 +621,19 @@ const DentalOS = () => {
         >
           <div style={{ maxWidth: 1200, margin: "0 auto", width: "100%", position: "relative", zIndex: 1, textAlign: "center" }}>
             <h1 className="hero-title fade-up delay-1" style={{ maxWidth: "none", margin: "0 auto" }}>
-              Tu consultorio,
+              La mitad de tu día
               <br />
-              <em>funcionando</em>
+              no es
               <br />
-              <span style={{ marginLeft: "0.1em" }}>solo.</span>
+              <em>odontología.</em>
             </h1>
 
             <p className="hero-summary fade-up delay-2" style={{ maxWidth: 620, margin: "16px auto 0", textAlign: "center" }}>
-              DentalOS es el primer sistema de gestión inteligente construido para el consultorio odontológico argentino.
+              Y ese tiempo que perdés son pacientes que no atendés. DentalOS automatiza turnos, historias clínicas y WhatsApp para que vos vuelvas a hacer lo que elegiste.
             </p>
 
             {/* VSL Embed */}
             <div
-              ref={videoRef}
               className="fade-up delay-3"
               style={{
                 width: "100%",
@@ -701,7 +663,7 @@ const DentalOS = () => {
                 className="primary-btn"
                 style={{ padding: "20px 36px", fontSize: 14 }}
               >
-                Agendar demo de 20 minutos →
+                Agendar demo de 30 minutos →
               </button>
               <p
                 style={{
@@ -711,44 +673,11 @@ const DentalOS = () => {
                   fontWeight: 500,
                 }}
               >
-                Sin compromiso. Sin tarjeta de crédito. Con el fundador.
+                ✓ Sin compromiso · ✓ Con el fundador · ✓ Garantía de 60 días
               </p>
             </div>
           </div>
         </section>
-
-        {/* ── CALENDARIO CAL.COM ── */}
-        <div
-          id="calendario-section"
-          ref={calSectionRef}
-          style={{
-            opacity: calVisible ? 1 : 0,
-            maxHeight: calVisible ? 2000 : 0,
-            overflow: "hidden",
-            transition: "all 0.8s ease",
-            background: "rgba(255,255,255,0.6)",
-            borderTop: "1px solid rgba(23,49,46,0.08)",
-            borderBottom: "1px solid rgba(23,49,46,0.08)",
-            padding: calVisible ? "80px clamp(24px, 5vw, 42px)" : "0 clamp(24px, 5vw, 42px)",
-          }}
-        >
-          <div style={{ textAlign: "center" }}>
-            <div className="section-tag" style={{ justifyContent: "center" }}>Agendá tu demo</div>
-            <h2 className="section-title" style={{ maxWidth: "none", margin: "0 auto 12px" }}>
-              Elegí el horario que
-              <br />
-              <em>mejor te quede.</em>
-            </h2>
-            <p className="section-copy-mono" style={{ maxWidth: 480, margin: "0 auto 0" }}>
-              Demo de 30 minutos con el fundador. Sin compromiso.
-            </p>
-          </div>
-          <iframe
-            src="https://cal.com/dentalos/30min?embed=true&layout=month_view"
-            style={{ width: "100%", height: "600px", border: "none", borderRadius: "12px" }}
-            title="Agendar demo DentalOS"
-          />
-        </div>
 
         {/* ── TRUST BAR ── */}
         <div className="trust-bar">
@@ -782,6 +711,20 @@ const DentalOS = () => {
               </div>
             ))}
           </div>
+
+          <p style={{
+            marginTop: 48,
+            fontSize: 19,
+            fontWeight: 600,
+            lineHeight: 1.8,
+            color: "rgba(23,49,46,0.75)",
+            maxWidth: 640,
+            textAlign: "center",
+            margin: "48px auto 0",
+            fontStyle: "italic",
+          }}>
+            Abriste tu consultorio para vivir de lo que amás. No para pasarte el día entre papeles, turnos y mensajes sin contestar.
+          </p>
         </section>
 
         <div className="divider" />
@@ -856,35 +799,308 @@ const DentalOS = () => {
 
         <div className="divider" />
 
-        {/* ── PRUEBA SOCIAL ── */}
+        {/* ── CASO DE ÉXITO DENTAL QUALITY ── */}
         <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
-          <div className="section-tag">Resultados</div>
+          <div className="section-tag">Caso de éxito</div>
           <h2 className="section-title">
-            Resultados
-            <br />
-            <em>reales.</em>
+            <em>Dental Quality</em>
           </h2>
-          <p className="section-copy-mono" style={{ maxWidth: 460, marginTop: 12, marginBottom: 48 }}>
-            Primeros 30 días de piloto.
+          <p className="section-copy-mono" style={{ maxWidth: 560, marginTop: 12, marginBottom: 40 }}>
+            Lanús y Lomas de Zamora · 2 sucursales · +20 profesionales · +100 pacientes/día
           </p>
 
-          <div className="modules-grid">
-            {heroStats.map((stat) => (
-              <div key={stat.num} className="stat-card" style={{ padding: "36px 28px", textAlign: "center" }}>
-                <div className="stat-num" style={{ fontSize: 48, marginBottom: 10 }}>{stat.num}</div>
-                <div className="stat-label">{stat.label}</div>
-              </div>
-            ))}
+          <div className="about-block" style={{ background: "rgba(31,107,104,0.04)", marginBottom: 48 }}>
+            <p className="about-copy" style={{ fontStyle: "italic", fontSize: 18, lineHeight: 1.9 }}>
+              "Las secretarias pasaban el día entero dando turnos por teléfono y llamando para confirmar. Los profesionales perdían horas respondiendo consultas por WhatsApp y cargando historias clínicas a mano. La atención presencial se resentía."
+            </p>
           </div>
 
-          <div className="about-block" style={{ marginTop: 40 }}>
-            <p className="about-copy" style={{ fontStyle: "italic", marginBottom: 12, fontSize: 18 }}>
-              "Antes el domingo a la noche revisaba WhatsApp por si había mensajes de pacientes. Ahora no. Eso solo ya valió la implementación."
+          <div className="section-tag">Después de DentalOS</div>
+
+          <div className="modules-grid" style={{ gridTemplateColumns: "repeat(4, 1fr)", marginTop: 24 }}>
+            <div className="stat-card" style={{ padding: "28px", textAlign: "center" }}>
+              <div style={{ fontSize: 28, marginBottom: 10 }}>📋</div>
+              <div className="stat-num" style={{ fontSize: 38 }}>42 hs/sem</div>
+              <div className="stat-label">ahorradas en historias clínicas (ahora se completan en 1 min por audio)</div>
+            </div>
+            <div className="stat-card" style={{ padding: "28px", textAlign: "center" }}>
+              <div style={{ fontSize: 28, marginBottom: 10 }}>📱</div>
+              <div className="stat-num" style={{ fontSize: 38 }}>16 hs/día</div>
+              <div className="stat-label">de gestión de turnos reemplazadas por autogestión WhatsApp 24/7</div>
+            </div>
+            <div className="stat-card" style={{ padding: "28px", textAlign: "center" }}>
+              <div style={{ fontSize: 28, marginBottom: 10 }}>🩺</div>
+              <div className="stat-num" style={{ fontSize: 38 }}>4 hs/sem</div>
+              <div className="stat-label">recuperadas por profesional (consultas filtradas por IA)</div>
+            </div>
+            <div className="stat-card" style={{ padding: "28px", textAlign: "center" }}>
+              <div style={{ fontSize: 28, marginBottom: 10 }}>⏰</div>
+              <div className="stat-num" style={{ fontSize: 38 }}>24/7</div>
+              <div className="stat-label">atención automatizada: noches, fines de semana, feriados</div>
+            </div>
+          </div>
+
+          {/* Video del chatbot */}
+          <div style={{ textAlign: "center", marginTop: 64 }}>
+            <p style={{ fontSize: 15, color: "rgba(23,49,46,0.6)", fontWeight: 600, marginBottom: 16 }}>
+              Mirá el agente en acción →
             </p>
-            <p style={{ fontSize: 14, color: "rgba(23,49,46,0.55)", fontWeight: 600 }}>
-              — Odontóloga, piloto activo, CABA
+            <div style={{
+              maxWidth: 360,
+              margin: "0 auto",
+              borderRadius: 16,
+              overflow: "hidden",
+              border: "1px solid rgba(23,49,46,0.08)",
+              boxShadow: "0 8px 30px rgba(23,49,46,0.07), 0 2px 8px rgba(23,49,46,0.04)",
+            }}>
+              <div style={{ position: "relative", paddingBottom: "177.78%", height: 0 }}>
+                <iframe
+                  src="https://www.youtube.com/embed/1XceLQmf6Pg"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                  title="DentalOS agente en acción"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* La cuenta que nadie hace */}
+          <div style={{
+            background: "rgba(31,107,104,0.04)",
+            border: "1px solid rgba(31,107,104,0.12)",
+            borderRadius: 22,
+            padding: 28,
+            marginTop: 64,
+          }}>
+            <div className="section-tag" style={{ marginBottom: 20 }}>La cuenta que nadie hace</div>
+            <div style={{ overflowX: "auto", borderRadius: 14, border: "1px solid rgba(23,49,46,0.08)" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 560 }}>
+                <thead>
+                  <tr style={{ background: "#1F6B68" }}>
+                    <th style={{ padding: "16px 20px", textAlign: "left", color: "#fff", fontSize: 14, fontWeight: 700 }}>Concepto</th>
+                    <th style={{ padding: "16px 20px", textAlign: "left", color: "#fff", fontSize: 14, fontWeight: 700 }}>Sin DentalOS</th>
+                    <th style={{ padding: "16px 20px", textAlign: "left", color: "#fff", fontSize: 14, fontWeight: 700 }}>Con DentalOS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      concepto: "Historias clínicas",
+                      sin: "42 hs/sem × $25.000/h = $1.050.000/sem",
+                      con: "1 min por paciente (audio)",
+                    },
+                    {
+                      concepto: "Gestión de turnos WhatsApp",
+                      sin: "2 secretarias full time = $1.800.000/mes",
+                      con: "Autogestión 24/7, $0 extra",
+                    },
+                    {
+                      concepto: "Consultas al profesional",
+                      sin: "4 hs/sem × $25.000/h = $100.000/sem",
+                      con: "IA filtra, solo llegan urgencias",
+                    },
+                    {
+                      concepto: "Sin atención post 18hs ni fines de semana",
+                      sin: "Pacientes perdidos (no cuantificable)",
+                      con: "Atención 24/7 automática",
+                    },
+                  ].map((row, i) => (
+                    <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "rgba(31,107,104,0.03)", borderBottom: "1px solid rgba(23,49,46,0.06)" }}>
+                      <td style={{ padding: "16px 20px", fontSize: 15, fontWeight: 600, color: "#17312E" }}>{row.concepto}</td>
+                      <td style={{ padding: "16px 20px", fontSize: 15, color: "rgba(23,49,46,0.55)" }}>{row.sin}</td>
+                      <td style={{ padding: "16px 20px", fontSize: 15, fontWeight: 700, color: "#1F6B68" }}>{row.con}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Bloque resumen */}
+            <div style={{
+              background: "#fff",
+              border: "1px solid rgba(31,107,104,0.15)",
+              borderRadius: 14,
+              padding: "24px 28px",
+              marginTop: 20,
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+                <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(23,49,46,0.7)" }}>Costo mensual total sin DentalOS</span>
+                <span style={{ fontSize: 26, fontWeight: 800, color: "#C0392B", letterSpacing: "-0.02em" }}>$6.400.000/mes</span>
+              </div>
+              <div style={{ height: 1, background: "rgba(23,49,46,0.08)", margin: "16px 0" }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+                <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(23,49,46,0.7)" }}>Costo mensual con DentalOS</span>
+                <span style={{ fontSize: 26, fontWeight: 800, color: "#1F6B68", letterSpacing: "-0.02em" }}>~$0</span>
+              </div>
+              <div style={{ height: 1, background: "rgba(23,49,46,0.08)", margin: "16px 0" }} />
+              <p style={{ textAlign: "center", fontWeight: 700, fontSize: 16, color: "#17312E", lineHeight: 1.6 }}>
+                Cada mes que pasa sin automatizar, tu centro pierde $6.400.000 en tareas que una IA resuelve sola.
+              </p>
+            </div>
+
+            <p style={{ marginTop: 16, fontSize: 13, color: "rgba(23,49,46,0.45)", lineHeight: 1.6 }}>
+              * Valor hora odontólogo según AOA: $25.000. Sueldo secretaria promedio: $900.000/mes. Cálculo basado en 5 días/semana, 4 semanas/mes.
             </p>
           </div>
+
+          {/* Link Instagram */}
+          <div style={{ textAlign: "center", marginTop: 36 }}>
+            <a
+              href="https://www.instagram.com/dentalqualitylanus/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-block",
+                color: "#1F6B68",
+                border: "1px solid rgba(31,107,104,0.25)",
+                borderRadius: 12,
+                padding: "10px 20px",
+                fontSize: 15,
+                fontWeight: 600,
+                textDecoration: "none",
+                transition: "border-color 0.2s ease",
+              }}
+            >
+              📸 @dentalqualitylanus
+            </a>
+          </div>
+
+          {/* ── LEAD MAGNET ── */}
+          {!leadSubmitted ? (
+            <div style={{
+              background: "rgba(31,107,104,0.04)",
+              border: "1px solid rgba(31,107,104,0.12)",
+              borderRadius: 22,
+              padding: 36,
+              maxWidth: 620,
+              margin: "40px auto 0",
+              textAlign: "center",
+            }}>
+              <h3 style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-0.03em", color: "#17312E", marginBottom: 8 }}>
+                Hacé la cuenta con tu consultorio.
+              </h3>
+              <p style={{ fontSize: 15, color: "rgba(23,49,46,0.7)", lineHeight: 1.7, marginBottom: 24 }}>
+                ¿Cuántos pacientes atendés por día? Te calculamos cuánto estás perdiendo en tareas administrativas y te lo mandamos por WhatsApp.
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Tu nombre"
+                  value={leadFormData.nombre}
+                  onChange={(e) => setLeadFormData({ ...leadFormData, nombre: e.target.value })}
+                  style={{
+                    width: "100%",
+                    padding: "14px 16px",
+                    borderRadius: 16,
+                    border: "1px solid rgba(23,49,46,0.12)",
+                    background: "rgba(247,251,250,0.9)",
+                    fontFamily: "inherit",
+                    fontSize: 15,
+                    marginBottom: 12,
+                    outline: "none",
+                    color: "#17312E",
+                  }}
+                />
+                <input
+                  type="tel"
+                  placeholder="Tu WhatsApp (ej: 11 5555-1234)"
+                  value={leadFormData.whatsapp}
+                  onChange={(e) => setLeadFormData({ ...leadFormData, whatsapp: e.target.value })}
+                  style={{
+                    width: "100%",
+                    padding: "14px 16px",
+                    borderRadius: 16,
+                    border: "1px solid rgba(23,49,46,0.12)",
+                    background: "rgba(247,251,250,0.9)",
+                    fontFamily: "inherit",
+                    fontSize: 15,
+                    marginBottom: 12,
+                    outline: "none",
+                    color: "#17312E",
+                  }}
+                />
+                <div style={{ position: "relative", marginBottom: 0 }}>
+                  <select
+                    value={leadFormData.pacientes}
+                    onChange={(e) => setLeadFormData({ ...leadFormData, pacientes: e.target.value })}
+                    style={{
+                      width: "100%",
+                      padding: "14px 16px",
+                      borderRadius: 16,
+                      border: "1px solid rgba(23,49,46,0.12)",
+                      background: "rgba(247,251,250,0.9)",
+                      fontFamily: "inherit",
+                      fontSize: 15,
+                      appearance: "none",
+                      outline: "none",
+                      color: leadFormData.pacientes ? "#17312E" : "rgba(23,49,46,0.45)",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <option value="" disabled>¿Cuántos pacientes atendés por día?</option>
+                    <option value="Menos de 20">Menos de 20</option>
+                    <option value="20-50">20-50</option>
+                    <option value="50-100">50-100</option>
+                    <option value="Más de 100">Más de 100</option>
+                  </select>
+                  <span style={{
+                    position: "absolute",
+                    right: 16,
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    pointerEvents: "none",
+                    color: "rgba(23,49,46,0.45)",
+                    fontSize: 12,
+                  }}>▼</span>
+                </div>
+                <button
+                  className="primary-btn"
+                  style={{ width: "100%", marginTop: 8 }}
+                  disabled={leadSending}
+                  onClick={async () => {
+                    if (!leadFormData.nombre || !leadFormData.whatsapp || !leadFormData.pacientes) return;
+                    setLeadSending(true);
+                    try {
+                      await fetch("https://formspree.io/f/mwvrlekb", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          nombre: leadFormData.nombre,
+                          whatsapp: leadFormData.whatsapp,
+                          pacientes: leadFormData.pacientes,
+                        }),
+                      });
+                      setLeadSubmitted(true);
+                    } finally {
+                      setLeadSending(false);
+                    }
+                  }}
+                >
+                  {leadSending ? "Enviando..." : "Quiero mi cálculo personalizado"}
+                </button>
+                <p style={{ fontSize: 13, color: "rgba(23,49,46,0.5)", marginTop: 12 }}>
+                  Te lo mandamos por WhatsApp en menos de 24hs
+                </p>
+              </div>
+            </div>
+          ) : (
+            <div style={{
+              background: "rgba(31,107,104,0.04)",
+              border: "1px solid rgba(31,107,104,0.12)",
+              borderRadius: 22,
+              padding: 36,
+              maxWidth: 620,
+              margin: "40px auto 0",
+              textAlign: "center",
+            }}>
+              <div style={{ fontSize: 40, marginBottom: 16 }}>✅</div>
+              <p style={{ fontSize: 18, fontWeight: 700, color: "#17312E" }}>
+                ¡Listo! Te contactamos en menos de 24hs.
+              </p>
+            </div>
+          )}
         </section>
 
         <div className="divider" />
@@ -928,22 +1144,22 @@ const DentalOS = () => {
           <div style={{ maxWidth: 700, margin: "0 auto" }}>
             <div className="section-tag" style={{ justifyContent: "center" }}>Demo</div>
             <h2 className="section-title" style={{ maxWidth: "none", margin: "0 auto 24px" }}>
-              20 minutos para saber si DentalOS
+              30 minutos para saber si DentalOS
               <br />
               <em>es para vos.</em>
             </h2>
             <p className="section-copy" style={{ maxWidth: 560, margin: "0 auto 40px" }}>
-              No te pedimos que tomes ninguna decisión en la demo. Te mostramos el sistema funcionando, aplicado a un consultorio como el tuyo. La demo la hace el fundador. No un equipo de ventas.
+              Sabemos que te cuesta tiempo, estrés y dolores de cabeza. Pero también sabemos que DentalOS no es para todos — y preferimos ser honestos con eso. Por eso la demo no es un pitch: nos sentamos juntos, miramos tus números reales, y vemos si tiene sentido para tu consultorio. Si no es rentable para vos, te lo decimos. Y si arrancás y en 60 días el sistema no funciona para tu consultorio, te devolvemos el dinero.
             </p>
             <button
               onClick={openCalPopup}
               className="primary-btn"
               style={{ padding: "20px 36px", fontSize: 14 }}
             >
-              Agendar mi demo de 20 minutos →
+              Agendar mi demo de 30 minutos →
             </button>
             <p style={{ marginTop: 20, fontSize: 14, color: "rgba(23,49,46,0.55)", fontWeight: 500 }}>
-              ✓ Sin compromiso de compra · ✓ Sin tarjeta de crédito · ✓ Con el fundador, no con un vendedor
+              ✓ Sin compromiso · ✓ Con el fundador, no con un vendedor · ✓ Garantía de 60 días
             </p>
             <iframe
               src="https://cal.com/dentalos/30min?embed=true&layout=month_view"
@@ -966,7 +1182,7 @@ const DentalOS = () => {
             DentalOS — Sistema de gestión inteligente para consultorios odontológicos argentinos
           </p>
           <p style={{ color: "rgba(23,49,46,0.45)", fontSize: 13, fontWeight: 400 }}>
-            Buenos Aires, Argentina · info@dentalos.com.ar
+            Buenos Aires, Argentina · comercialrutia@gmail.com
           </p>
         </footer>
       </div>
