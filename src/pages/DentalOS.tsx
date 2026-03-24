@@ -131,7 +131,7 @@ const DentalOS = () => {
         color: "#17312E",
         minHeight: "100vh",
         overflowX: "hidden",
-        paddingTop: "100px",
+        paddingTop: "clamp(80px, 12vw, 100px)",
       }}
     >
       <WavePlane />
@@ -143,7 +143,7 @@ const DentalOS = () => {
         left: 0,
         right: 0,
         zIndex: 50,
-        padding: "18px clamp(24px, 5vw, 42px)",
+        padding: "14px clamp(24px, 5vw, 42px)",
         backdropFilter: scrollY > 40 ? "blur(18px)" : "none",
         background: scrollY > 40 ? "rgba(247,251,250,0.84)" : "transparent",
         borderBottom: scrollY > 40 ? "1px solid rgba(23,49,46,0.08)" : "none",
@@ -153,7 +153,7 @@ const DentalOS = () => {
           maxWidth: 1200,
           margin: "0 auto",
         }}>
-          <img src={dentalosLogo} alt="DentalOS" className="h-24 md:h-28 w-auto" />
+          <img src={dentalosLogo} alt="DentalOS" className="h-12 md:h-14 w-auto" />
           <button
             onClick={openCalPopup}
             className="primary-btn hidden md:inline-block"
@@ -347,6 +347,12 @@ const DentalOS = () => {
           gap: 16px;
           margin-top: 48px;
         }
+        .stats-grid-4 {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+          margin-top: 24px;
+        }
         .module-card {
           background: rgba(255,255,255,0.88);
           border: 1px solid rgba(23,49,46,0.08);
@@ -470,7 +476,8 @@ const DentalOS = () => {
           transition: background 0.15s;
         }
         .ba-table tbody tr:last-child { border-bottom: none; }
-        .ba-table tbody tr:hover { background: rgba(31,107,104,0.03); }
+        .ba-table tbody tr:hover { background: rgba(31,107,104,0.05); transition: background 0.2s ease; }
+        .ba-table tbody tr:hover .ba-good { color: #1F6B68; }
         .ba-table td {
           padding: 18px 28px;
           font-size: 16px;
@@ -585,24 +592,62 @@ const DentalOS = () => {
           text-align: center;
         }
 
+        /* ── DESKTOP HERO ── */
+        @media (min-width: 960px) {
+          .hero-section {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+          }
+        }
+
         /* ── RESPONSIVE ── */
         @media (max-width: 960px) {
           .features-layout { grid-template-columns: 1fr !important; }
           .modules-grid { grid-template-columns: repeat(2, 1fr); }
+          .stats-grid-4 { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 768px) {
-          .sticky-cta-mobile { display: none; }
+          .sticky-cta-mobile { display: block; padding: 12px 20px calc(12px + env(safe-area-inset-bottom)); }
+          .chatbot-video-layout { flex-direction: column !important; gap: 24px !important; text-align: center; }
+          .chatbot-video-layout > div:first-child { width: 100% !important; max-width: min(320px, 85vw); margin: 0 auto; }
           .modules-grid { grid-template-columns: 1fr; }
+          .stats-grid-4 { grid-template-columns: 1fr; }
           .hero-cta-group { width: 100%; }
           .primary-btn,
           .secondary-btn { width: 100%; }
+          .hero-title { font-size: clamp(32px, 9vw, 48px) !important; line-height: 0.96 !important; }
           .hero-title,
           .section-title { max-width: none; }
+          .hero-summary { font-size: 15px !important; margin-top: 16px !important; }
           .stat-num { font-size: 32px !important; }
           .stat-label { font-size: 13px; }
           .section-padding { padding-top: 64px !important; padding-bottom: 64px !important; }
           .page-shell { padding-bottom: 72px; }
+          .ba-table { min-width: unset !important; }
+          .ba-table thead { display: none; }
+          .ba-table tbody tr { display: flex; flex-direction: column; padding: 16px 20px; gap: 8px; }
+          .ba-table td { padding: 0 !important; display: block; font-size: 15px !important; }
+          .ba-table .ba-bad::before { content: '❌ '; }
+          .ba-table .ba-good::before { content: '✅ '; }
+          .features-layout { gap: 32px !important; }
+          .trust-bar-inner { gap: 8px 16px !important; justify-content: flex-start !important; }
+          .trust-item { font-size: 13px !important; }
+          .faq-question { font-size: 15px !important; }
+          .faq-answer { font-size: 15px !important; }
+          .cost-table thead th { padding: 12px 14px !important; font-size: 12px !important; }
+          .cost-table td { padding: 12px 14px !important; font-size: 13px !important; }
+          .cal-embed-wrap iframe { height: 500px !important; }
+        }
+        @media (max-width: 480px) {
+          .cost-table thead { display: none; }
+          .cost-table tr { display: flex; flex-direction: column; padding: 16px; gap: 6px; border-bottom: 1px solid rgba(23,49,46,0.08); }
+          .cost-table td { display: block !important; padding: 0 !important; font-size: 14px !important; }
+          .cost-table td:first-child { font-weight: 700; margin-bottom: 4px; }
+          .cost-table td:nth-child(2)::before { content: 'Sin DentalOS: '; font-weight: 600; color: rgba(23,49,46,0.5); }
+          .cost-table td:nth-child(3)::before { content: 'Con DentalOS: '; font-weight: 600; color: #1F6B68; }
+          .cal-embed-wrap { display: none; }
         }
       `}</style>
 
@@ -613,6 +658,7 @@ const DentalOS = () => {
 
         {/* ── HERO ── */}
         <section
+          className="hero-section"
           style={{
             display: "flex",
             alignItems: "center",
@@ -638,7 +684,7 @@ const DentalOS = () => {
               style={{
                 width: "100%",
                 maxWidth: 860,
-                margin: "20px auto",
+                margin: "40px auto",
                 borderRadius: 16,
                 overflow: "hidden",
                 border: "1px solid rgba(23,49,46,0.08)",
@@ -657,7 +703,7 @@ const DentalOS = () => {
               </div>
             </div>
 
-            <div className="fade-up delay-4">
+            <div className="fade-up delay-4" style={{ marginTop: 32 }}>
               <button
                 onClick={openCalPopup}
                 className="primary-btn"
@@ -682,7 +728,7 @@ const DentalOS = () => {
         {/* ── TRUST BAR ── */}
         <div className="trust-bar">
           <div className="trust-bar-inner">
-            <span className="trust-item">🦷 Construido para odontología argentina</span>
+            <span className="trust-item">🦷 42 hs/semana ahorradas en un consultorio real</span>
             <span className="trust-item">📅 Pilotos activos en consultorios reales</span>
             <span className="trust-item">💰 Precio en USD, sin sorpresas de inflación</span>
             <span className="trust-item">🤝 Implementación personalizada por el fundador</span>
@@ -692,7 +738,7 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── EL PROBLEMA ── */}
-        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
+        <section className="section-padding" style={{ padding: "96px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
           <div className="section-tag">El problema</div>
           <h2 className="section-title">
             Los consultorios
@@ -730,7 +776,7 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── ANTES / DESPUÉS ── */}
-        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
+        <section className="section-padding" style={{ padding: "96px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
           <div className="section-tag">La solución</div>
           <h2 className="section-title">
             Antes y después
@@ -817,7 +863,7 @@ const DentalOS = () => {
 
           <div className="section-tag">Después de DentalOS</div>
 
-          <div className="modules-grid" style={{ gridTemplateColumns: "repeat(4, 1fr)", marginTop: 24 }}>
+          <div className="stats-grid-4">
             <div className="stat-card" style={{ padding: "28px", textAlign: "center" }}>
               <div style={{ fontSize: 28, marginBottom: 10 }}>📋</div>
               <div className="stat-num" style={{ fontSize: 38 }}>42 hs/sem</div>
@@ -840,132 +886,47 @@ const DentalOS = () => {
             </div>
           </div>
 
+          <div style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(23,49,46,0.1), transparent)", margin: "64px 0" }} />
+
           {/* Video del chatbot */}
-          <div style={{ textAlign: "center", marginTop: 64 }}>
-            <p style={{ fontSize: 15, color: "rgba(23,49,46,0.6)", fontWeight: 600, marginBottom: 16 }}>
-              Mirá el agente en acción →
-            </p>
-            <div style={{
-              maxWidth: 360,
-              margin: "0 auto",
-              borderRadius: 16,
-              overflow: "hidden",
-              border: "1px solid rgba(23,49,46,0.08)",
-              boxShadow: "0 8px 30px rgba(23,49,46,0.07), 0 2px 8px rgba(23,49,46,0.04)",
-            }}>
-              <div style={{ position: "relative", paddingBottom: "177.78%", height: 0 }}>
-                <iframe
-                  src="https://www.youtube.com/embed/1XceLQmf6Pg"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-                  title="DentalOS agente en acción"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* La cuenta que nadie hace */}
-          <div style={{
-            background: "rgba(31,107,104,0.04)",
-            border: "1px solid rgba(31,107,104,0.12)",
-            borderRadius: 22,
-            padding: 28,
-            marginTop: 64,
+          <div className="chatbot-video-layout" style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 48,
+            maxWidth: 800,
+            margin: "0 auto",
           }}>
-            <div className="section-tag" style={{ marginBottom: 20 }}>La cuenta que nadie hace</div>
-            <div style={{ overflowX: "auto", borderRadius: 14, border: "1px solid rgba(23,49,46,0.08)" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 560 }}>
-                <thead>
-                  <tr style={{ background: "#1F6B68" }}>
-                    <th style={{ padding: "16px 20px", textAlign: "left", color: "#fff", fontSize: 14, fontWeight: 700 }}>Concepto</th>
-                    <th style={{ padding: "16px 20px", textAlign: "left", color: "#fff", fontSize: 14, fontWeight: 700 }}>Sin DentalOS</th>
-                    <th style={{ padding: "16px 20px", textAlign: "left", color: "#fff", fontSize: 14, fontWeight: 700 }}>Con DentalOS</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {[
-                    {
-                      concepto: "Historias clínicas",
-                      sin: "42 hs/sem × $25.000/h = $1.050.000/sem",
-                      con: "1 min por paciente (audio)",
-                    },
-                    {
-                      concepto: "Gestión de turnos WhatsApp",
-                      sin: "2 secretarias full time = $1.800.000/mes",
-                      con: "Autogestión 24/7, $0 extra",
-                    },
-                    {
-                      concepto: "Consultas al profesional",
-                      sin: "4 hs/sem × $25.000/h = $100.000/sem",
-                      con: "IA filtra, solo llegan urgencias",
-                    },
-                    {
-                      concepto: "Sin atención post 18hs ni fines de semana",
-                      sin: "Pacientes perdidos (no cuantificable)",
-                      con: "Atención 24/7 automática",
-                    },
-                  ].map((row, i) => (
-                    <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "rgba(31,107,104,0.03)", borderBottom: "1px solid rgba(23,49,46,0.06)" }}>
-                      <td style={{ padding: "16px 20px", fontSize: 15, fontWeight: 600, color: "#17312E" }}>{row.concepto}</td>
-                      <td style={{ padding: "16px 20px", fontSize: 15, color: "rgba(23,49,46,0.55)" }}>{row.sin}</td>
-                      <td style={{ padding: "16px 20px", fontSize: 15, fontWeight: 700, color: "#1F6B68" }}>{row.con}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div style={{ flex: "0 0 auto" }}>
+              <div style={{
+                width: 320,
+                borderRadius: 16,
+                overflow: "hidden",
+                border: "1px solid rgba(23,49,46,0.08)",
+                boxShadow: "0 8px 30px rgba(23,49,46,0.07), 0 2px 8px rgba(23,49,46,0.04)",
+              }}>
+                <div style={{ position: "relative", paddingBottom: "177.78%", height: 0 }}>
+                  <iframe
+                    src="https://www.youtube.com/embed/1XceLQmf6Pg"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+                    title="DentalOS agente en acción"
+                  />
+                </div>
+              </div>
             </div>
-
-            {/* Bloque resumen */}
-            <div style={{
-              background: "#fff",
-              border: "1px solid rgba(31,107,104,0.15)",
-              borderRadius: 14,
-              padding: "24px 28px",
-              marginTop: 20,
-            }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-                <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(23,49,46,0.7)" }}>Costo mensual total sin DentalOS</span>
-                <span style={{ fontSize: 26, fontWeight: 800, color: "#C0392B", letterSpacing: "-0.02em" }}>$6.400.000/mes</span>
-              </div>
-              <div style={{ height: 1, background: "rgba(23,49,46,0.08)", margin: "16px 0" }} />
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-                <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(23,49,46,0.7)" }}>Costo mensual con DentalOS</span>
-                <span style={{ fontSize: 26, fontWeight: 800, color: "#1F6B68", letterSpacing: "-0.02em" }}>~$0</span>
-              </div>
-              <div style={{ height: 1, background: "rgba(23,49,46,0.08)", margin: "16px 0" }} />
-              <p style={{ textAlign: "center", fontWeight: 700, fontSize: 16, color: "#17312E", lineHeight: 1.6 }}>
-                Cada mes que pasa sin automatizar, tu centro pierde $6.400.000 en tareas que una IA resuelve sola.
+            <div>
+              <h3 style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-0.03em", color: "#17312E", marginBottom: 12, lineHeight: 1.2 }}>
+                Mirá el agente<br />en acción.
+              </h3>
+              <p style={{ fontSize: 16, color: "rgba(23,49,46,0.7)", lineHeight: 1.8, maxWidth: 340 }}>
+                Un paciente escribe por WhatsApp a las 23hs. El agente responde, verifica disponibilidad y confirma el turno. Sin intervención humana.
               </p>
             </div>
-
-            <p style={{ marginTop: 16, fontSize: 13, color: "rgba(23,49,46,0.45)", lineHeight: 1.6 }}>
-              * Valor hora odontólogo según AOA: $25.000. Sueldo secretaria promedio: $900.000/mes. Cálculo basado en 5 días/semana, 4 semanas/mes.
-            </p>
           </div>
 
-          {/* Link Instagram */}
-          <div style={{ textAlign: "center", marginTop: 36 }}>
-            <a
-              href="https://www.instagram.com/dentalqualitylanus/"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                display: "inline-block",
-                color: "#1F6B68",
-                border: "1px solid rgba(31,107,104,0.25)",
-                borderRadius: 12,
-                padding: "10px 20px",
-                fontSize: 15,
-                fontWeight: 600,
-                textDecoration: "none",
-                transition: "border-color 0.2s ease",
-              }}
-            >
-              📸 @dentalqualitylanus
-            </a>
-          </div>
+          <div style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(23,49,46,0.1), transparent)", margin: "64px 0" }} />
 
           {/* ── LEAD MAGNET ── */}
           {!leadSubmitted ? (
@@ -973,9 +934,9 @@ const DentalOS = () => {
               background: "rgba(31,107,104,0.04)",
               border: "1px solid rgba(31,107,104,0.12)",
               borderRadius: 22,
-              padding: 36,
+              padding: "clamp(20px, 5vw, 36px)",
               maxWidth: 620,
-              margin: "40px auto 0",
+              margin: "0 auto",
               textAlign: "center",
             }}>
               <h3 style={{ fontSize: 24, fontWeight: 800, letterSpacing: "-0.03em", color: "#17312E", marginBottom: 8 }}>
@@ -1090,9 +1051,9 @@ const DentalOS = () => {
               background: "rgba(31,107,104,0.04)",
               border: "1px solid rgba(31,107,104,0.12)",
               borderRadius: 22,
-              padding: 36,
+              padding: "clamp(20px, 5vw, 36px)",
               maxWidth: 620,
-              margin: "40px auto 0",
+              margin: "0 auto",
               textAlign: "center",
             }}>
               <div style={{ fontSize: 40, marginBottom: 16 }}>✅</div>
@@ -1101,12 +1062,115 @@ const DentalOS = () => {
               </p>
             </div>
           )}
+
+          <div style={{ height: 1, background: "linear-gradient(90deg, transparent, rgba(23,49,46,0.1), transparent)", margin: "48px 0" }} />
+
+          {/* La cuenta que nadie hace */}
+          <div style={{
+            background: "rgba(31,107,104,0.04)",
+            border: "1px solid rgba(31,107,104,0.12)",
+            borderRadius: 22,
+            padding: 28,
+            marginTop: 0,
+          }}>
+            <div className="section-tag" style={{ marginBottom: 20 }}>La cuenta que nadie hace</div>
+            <div style={{ overflowX: "auto", borderRadius: 14, border: "1px solid rgba(23,49,46,0.08)" }}>
+              <table className="cost-table" style={{ width: "100%", borderCollapse: "collapse", minWidth: 0 }}>
+                <thead>
+                  <tr style={{ background: "#1F6B68" }}>
+                    <th style={{ padding: "16px 20px", textAlign: "left", color: "#fff", fontSize: 14, fontWeight: 700 }}>Concepto</th>
+                    <th style={{ padding: "16px 20px", textAlign: "left", color: "#fff", fontSize: 14, fontWeight: 700 }}>Sin DentalOS</th>
+                    <th style={{ padding: "16px 20px", textAlign: "left", color: "#fff", fontSize: 14, fontWeight: 700 }}>Con DentalOS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      concepto: "Historias clínicas",
+                      sin: "42 hs/sem × $25.000/h = $1.050.000/sem",
+                      con: "1 min por paciente (audio)",
+                    },
+                    {
+                      concepto: "Gestión de turnos WhatsApp",
+                      sin: "2 secretarias full time = $1.800.000/mes",
+                      con: "Autogestión 24/7, $0 extra",
+                    },
+                    {
+                      concepto: "Consultas al profesional",
+                      sin: "4 hs/sem × $25.000/h = $100.000/sem",
+                      con: "IA filtra, solo llegan urgencias",
+                    },
+                    {
+                      concepto: "Sin atención post 18hs ni fines de semana",
+                      sin: "Pacientes perdidos (no cuantificable)",
+                      con: "Atención 24/7 automática",
+                    },
+                  ].map((row, i) => (
+                    <tr key={i} style={{ background: i % 2 === 0 ? "#fff" : "rgba(31,107,104,0.03)", borderBottom: "1px solid rgba(23,49,46,0.06)" }}>
+                      <td style={{ padding: "16px 20px", fontSize: 15, fontWeight: 600, color: "#17312E" }}>{row.concepto}</td>
+                      <td style={{ padding: "16px 20px", fontSize: 15, color: "rgba(23,49,46,0.55)" }}>{row.sin}</td>
+                      <td style={{ padding: "16px 20px", fontSize: 15, fontWeight: 700, color: "#1F6B68" }}>{row.con}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Bloque resumen */}
+            <div style={{
+              background: "#fff",
+              border: "1px solid rgba(31,107,104,0.15)",
+              borderRadius: 14,
+              padding: "24px 28px",
+              marginTop: 20,
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+                <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(23,49,46,0.7)" }}>Costo mensual total sin DentalOS</span>
+                <span style={{ fontSize: 26, fontWeight: 800, color: "#C0392B", letterSpacing: "-0.02em" }}>$6.400.000/mes</span>
+              </div>
+              <div style={{ height: 1, background: "rgba(23,49,46,0.08)", margin: "16px 0" }} />
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+                <span style={{ fontSize: 15, fontWeight: 600, color: "rgba(23,49,46,0.7)" }}>Costo mensual con DentalOS</span>
+                <span style={{ fontSize: 26, fontWeight: 800, color: "#1F6B68", letterSpacing: "-0.02em" }}>~$0</span>
+              </div>
+              <div style={{ height: 1, background: "rgba(23,49,46,0.08)", margin: "16px 0" }} />
+              <p style={{ textAlign: "center", fontWeight: 700, fontSize: 16, color: "#17312E", lineHeight: 1.6 }}>
+                Cada mes que pasa sin automatizar, tu centro pierde $6.400.000 en tareas que una IA resuelve sola.
+              </p>
+            </div>
+
+            <p style={{ marginTop: 16, fontSize: 13, color: "rgba(23,49,46,0.45)", lineHeight: 1.6 }}>
+              * Valor hora odontólogo según AOA: $25.000. Sueldo secretaria promedio: $900.000/mes. Cálculo basado en 5 días/semana, 4 semanas/mes.
+            </p>
+          </div>
+
+          {/* Link Instagram */}
+          <div style={{ textAlign: "center", marginTop: 36 }}>
+            <a
+              href="https://www.instagram.com/dentalqualitylanus/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "inline-block",
+                color: "#1F6B68",
+                border: "1px solid rgba(31,107,104,0.25)",
+                borderRadius: 12,
+                padding: "10px 20px",
+                fontSize: 15,
+                fontWeight: 600,
+                textDecoration: "none",
+                transition: "border-color 0.2s ease",
+              }}
+            >
+              📸 @dentalqualitylanus
+            </a>
+          </div>
         </section>
 
         <div className="divider" />
 
         {/* ── FAQ ── */}
-        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 860, margin: "0 auto" }}>
+        <section className="section-padding" style={{ padding: "96px clamp(24px, 5vw, 42px)", maxWidth: 780, margin: "0 auto" }}>
           <div className="section-tag">FAQ</div>
           <h2 className="section-title" style={{ marginBottom: 48 }}>
             Las dudas que
@@ -1140,7 +1204,7 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── CTA FINAL ── */}
-        <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px) 92px", textAlign: "center" }}>
+        <section className="section-padding" style={{ padding: "140px clamp(24px, 5vw, 42px) 120px", textAlign: "center" }}>
           <div style={{ maxWidth: 700, margin: "0 auto" }}>
             <div className="section-tag" style={{ justifyContent: "center" }}>Demo</div>
             <h2 className="section-title" style={{ maxWidth: "none", margin: "0 auto 24px" }}>
@@ -1161,29 +1225,49 @@ const DentalOS = () => {
             <p style={{ marginTop: 20, fontSize: 14, color: "rgba(23,49,46,0.55)", fontWeight: 500 }}>
               ✓ Sin compromiso · ✓ Con el fundador, no con un vendedor · ✓ Garantía de 60 días
             </p>
-            <iframe
-              src="https://cal.com/dentalos/30min?embed=true&layout=month_view"
-              style={{ width: "100%", height: "600px", border: "none", borderRadius: "12px", marginTop: "32px" }}
-              title="Agendar demo DentalOS"
-            />
           </div>
         </section>
 
         {/* ── FOOTER ── */}
-        <footer
-          style={{
-            borderTop: "1px solid rgba(23,49,46,0.08)",
-            padding: "30px clamp(24px, 5vw, 42px)",
-            background: "rgba(255,255,255,0.6)",
-            textAlign: "center",
-          }}
-        >
-          <p style={{ color: "rgba(23,49,46,0.6)", fontSize: 14, fontWeight: 500, marginBottom: 6 }}>
-            DentalOS — Sistema de gestión inteligente para consultorios odontológicos argentinos
-          </p>
-          <p style={{ color: "rgba(23,49,46,0.45)", fontSize: 13, fontWeight: 400 }}>
-            Buenos Aires, Argentina · comercialrutia@gmail.com
-          </p>
+        <footer style={{
+          borderTop: "1px solid rgba(23,49,46,0.08)",
+          padding: "48px clamp(24px, 5vw, 42px) 36px",
+          background: "rgba(255,255,255,0.6)",
+        }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 24 }}>
+            <div>
+              <p style={{ color: "#17312E", fontSize: 15, fontWeight: 700, marginBottom: 4 }}>
+                DentalOS
+              </p>
+              <p style={{ color: "rgba(23,49,46,0.55)", fontSize: 13, fontWeight: 400 }}>
+                Sistema de gestión inteligente para consultorios odontológicos argentinos
+              </p>
+            </div>
+            <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+              <a
+                href="https://www.instagram.com/dentalqualitylanus/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "rgba(23,49,46,0.6)", fontSize: 14, fontWeight: 500, textDecoration: "none", transition: "color 0.2s" }}
+              >
+                Instagram
+              </a>
+              <a
+                href="mailto:comercialrutia@gmail.com"
+                style={{ color: "rgba(23,49,46,0.6)", fontSize: 14, fontWeight: 500, textDecoration: "none", transition: "color 0.2s" }}
+              >
+                comercialrutia@gmail.com
+              </a>
+            </div>
+          </div>
+          <div style={{ maxWidth: 1200, margin: "16px auto 0", borderTop: "1px solid rgba(23,49,46,0.06)", paddingTop: 16, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
+            <p style={{ color: "rgba(23,49,46,0.4)", fontSize: 12 }}>
+              © 2025 DentalOS · Buenos Aires, Argentina
+            </p>
+            <p style={{ color: "rgba(23,49,46,0.4)", fontSize: 12 }}>
+              Un producto de RutIA
+            </p>
+          </div>
         </footer>
       </div>
 
