@@ -140,7 +140,7 @@ const DentalOS = () => {
             className="primary-btn hidden md:inline-block"
             style={{ padding: "14px 24px", fontSize: 13, letterSpacing: "0.08em" }}
           >
-            AGENDAR AHORA
+            CONOCER MÁS
           </button>
         </div>
       </nav>
@@ -656,7 +656,7 @@ const DentalOS = () => {
             </h1>
 
             <p className="hero-summary fade-up delay-2" style={{ maxWidth: 620, margin: "16px auto 0", textAlign: "center" }}>
-              Y ese tiempo que perdés son pacientes que no atendés. DentalOS automatiza turnos, historias clínicas y WhatsApp para que vos vuelvas a hacer lo que elegiste.
+              Y ese tiempo que perdés son pacientes que no atendés, ingresos que no entraron y fines de semana que no existieron. DentalOS se encarga de la administración para que vos vuelvas a hacer lo que elegiste.
             </p>
 
             {/* VSL Embed */}
@@ -798,7 +798,7 @@ const DentalOS = () => {
                 <em>tu consultorio.</em>
               </h2>
               <p className="section-copy" style={{ maxWidth: 460, marginTop: 22 }}>
-                Cinco funcionalidades concretas que cambian la operación diaria de un consultorio odontológico.
+                Tres funcionalidades concretas que cambian la operación diaria de un consultorio odontológico.
               </p>
             </div>
 
@@ -1145,43 +1145,42 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── FAQ ── */}
-        <section className="section-padding" style={{ padding: "96px clamp(24px, 5vw, 42px)", background: "rgba(247,251,250,0.85)", backdropFilter: "blur(8px)" }}>
-          <div style={{ maxWidth: 780, margin: "0 auto" }}>
-            <div className="section-tag">FAQ</div>
-            <h2 className="section-title" style={{ marginBottom: 48 }}>
-              Las dudas que
-              <br />
-              probablemente
-              <br />
-              <em>tenés.</em>
-            </h2>
+        <section className="section-padding" style={{ padding: "96px clamp(24px, 5vw, 42px)", maxWidth: 780, margin: "0 auto" }}>
+          <div className="section-tag">FAQ</div>
+          <h2 className="section-title" style={{ marginBottom: 48 }}>
+            Las dudas que
+            <br />
+            probablemente
+            <br />
+            <em>tenés.</em>
+          </h2>
 
-            <div>
-              {faqs.map((faq, i) => (
-                <div key={i} className="faq-item">
-                  <button
-                    className="faq-question"
-                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                  >
-                    {faq.q}
-                    <ChevronDown
-                      size={20}
-                      style={{ transform: openFaq === i ? "rotate(180deg)" : "none" }}
-                    />
-                  </button>
-                  {openFaq === i && (
-                    <p className="faq-answer">{faq.a}</p>
-                  )}
-                </div>
-              ))}
-            </div>
+          <div>
+            {faqs.map((faq, i) => (
+              <div key={i} className="faq-item">
+                <button
+                  className="faq-question"
+                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  style={{ color: "#17312E" }}
+                >
+                  {faq.q}
+                  <ChevronDown
+                    size={20}
+                    style={{ transform: openFaq === i ? "rotate(180deg)" : "none" }}
+                  />
+                </button>
+                {openFaq === i && (
+                  <p className="faq-answer" style={{ color: "#17312E" }}>{faq.a}</p>
+                )}
+              </div>
+            ))}
           </div>
         </section>
 
         <div className="divider" />
 
         {/* ── CTA FINAL ── */}
-        <section className="section-padding" style={{ padding: "140px clamp(24px, 5vw, 42px) 120px", textAlign: "center", background: "rgba(247,251,250,0.85)", backdropFilter: "blur(8px)" }}>
+        <section className="section-padding" style={{ padding: "140px clamp(24px, 5vw, 42px) 120px", textAlign: "center" }}>
           <div style={{ maxWidth: 700, margin: "0 auto" }}>
             <div className="section-tag" style={{ justifyContent: "center" }}>Demo</div>
             <h2 className="section-title" style={{ maxWidth: "none", margin: "0 auto 24px" }}>
