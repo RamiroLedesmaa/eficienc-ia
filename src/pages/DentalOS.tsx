@@ -134,7 +134,7 @@ const DentalOS = () => {
           maxWidth: 1200,
           margin: "0 auto",
         }}>
-          <img src={dentalosLogo} alt="DentalOS" className="h-12 md:h-14 w-auto" />
+          <img src={dentalosLogo} alt="DentalOS" className="h-12 md:h-[73px] w-auto" />
           <button
             onClick={openCalPopup}
             className="primary-btn hidden md:inline-block"
@@ -706,16 +706,6 @@ const DentalOS = () => {
           </div>
         </section>
 
-        {/* ── TRUST BAR ── */}
-        <div className="trust-bar">
-          <div className="trust-bar-inner">
-            <span className="trust-item">🦷 42 hs/semana ahorradas en un consultorio real</span>
-            <span className="trust-item">📅 Pilotos activos en consultorios reales</span>
-            <span className="trust-item">💰 Precio en USD, sin sorpresas de inflación</span>
-            <span className="trust-item">🤝 Implementación personalizada por el fundador</span>
-          </div>
-        </div>
-
         <div className="divider" />
 
         {/* ── EL PROBLEMA ── */}
@@ -830,7 +820,9 @@ const DentalOS = () => {
         <section className="section-padding" style={{ padding: "120px clamp(24px, 5vw, 42px)", maxWidth: 1200, margin: "0 auto" }}>
           <div className="section-tag">Caso de éxito</div>
           <h2 className="section-title">
-            <em>Dental Quality</em>
+            Lo que cambió en
+            <br />
+            <em>Dental Quality.</em>
           </h2>
           <p className="section-copy-mono" style={{ maxWidth: 560, marginTop: 12, marginBottom: 40 }}>
             Lanús y Lomas de Zamora · 2 sucursales · +20 profesionales · +100 pacientes/día
@@ -912,7 +904,8 @@ const DentalOS = () => {
           {/* ── LEAD MAGNET ── */}
           {!leadSubmitted ? (
             <div style={{
-              background: "rgba(31,107,104,0.04)",
+              background: "rgba(247,251,250,0.85)",
+              backdropFilter: "blur(8px)",
               border: "1px solid rgba(31,107,104,0.12)",
               borderRadius: 22,
               padding: "clamp(20px, 5vw, 36px)",
@@ -1048,7 +1041,8 @@ const DentalOS = () => {
 
           {/* La cuenta que nadie hace */}
           <div style={{
-            background: "rgba(31,107,104,0.04)",
+            background: "rgba(247,251,250,0.85)",
+            backdropFilter: "blur(8px)",
             border: "1px solid rgba(31,107,104,0.12)",
             borderRadius: 22,
             padding: 28,
@@ -1151,41 +1145,43 @@ const DentalOS = () => {
         <div className="divider" />
 
         {/* ── FAQ ── */}
-        <section className="section-padding" style={{ padding: "96px clamp(24px, 5vw, 42px)", maxWidth: 780, margin: "0 auto" }}>
-          <div className="section-tag">FAQ</div>
-          <h2 className="section-title" style={{ marginBottom: 48 }}>
-            Las dudas que
-            <br />
-            probablemente
-            <br />
-            <em>tenés.</em>
-          </h2>
+        <section className="section-padding" style={{ padding: "96px clamp(24px, 5vw, 42px)", background: "rgba(247,251,250,0.85)", backdropFilter: "blur(8px)" }}>
+          <div style={{ maxWidth: 780, margin: "0 auto" }}>
+            <div className="section-tag">FAQ</div>
+            <h2 className="section-title" style={{ marginBottom: 48 }}>
+              Las dudas que
+              <br />
+              probablemente
+              <br />
+              <em>tenés.</em>
+            </h2>
 
-          <div>
-            {faqs.map((faq, i) => (
-              <div key={i} className="faq-item">
-                <button
-                  className="faq-question"
-                  onClick={() => setOpenFaq(openFaq === i ? null : i)}
-                >
-                  {faq.q}
-                  <ChevronDown
-                    size={20}
-                    style={{ transform: openFaq === i ? "rotate(180deg)" : "none" }}
-                  />
-                </button>
-                {openFaq === i && (
-                  <p className="faq-answer">{faq.a}</p>
-                )}
-              </div>
-            ))}
+            <div>
+              {faqs.map((faq, i) => (
+                <div key={i} className="faq-item">
+                  <button
+                    className="faq-question"
+                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  >
+                    {faq.q}
+                    <ChevronDown
+                      size={20}
+                      style={{ transform: openFaq === i ? "rotate(180deg)" : "none" }}
+                    />
+                  </button>
+                  {openFaq === i && (
+                    <p className="faq-answer">{faq.a}</p>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
         <div className="divider" />
 
         {/* ── CTA FINAL ── */}
-        <section className="section-padding" style={{ padding: "140px clamp(24px, 5vw, 42px) 120px", textAlign: "center" }}>
+        <section className="section-padding" style={{ padding: "140px clamp(24px, 5vw, 42px) 120px", textAlign: "center", background: "rgba(247,251,250,0.85)", backdropFilter: "blur(8px)" }}>
           <div style={{ maxWidth: 700, margin: "0 auto" }}>
             <div className="section-tag" style={{ justifyContent: "center" }}>Demo</div>
             <h2 className="section-title" style={{ maxWidth: "none", margin: "0 auto 24px" }}>
