@@ -17,10 +17,6 @@ const faqs = [
     a: "Los datos se almacenan en infraestructura cloud con encriptación y backups automáticos. Podemos compartirte la documentación técnica si la necesitás.",
   },
   {
-    q: "¿Tienen integración con obras sociales?",
-    a: "El dashboard muestra saldo deudor y estado de prestaciones por obra social. La integración directa es parte del roadmap — te actualizamos en la demo.",
-  },
-  {
     q: "¿Cuánto tarda la implementación?",
     a: "Entre 7 y 15 días para la Fase 1. La hace el fundador personalmente, con onboarding activo durante los primeros 15 días.",
   },
@@ -28,34 +24,29 @@ const faqs = [
     q: "¿Cuánto cuesta DentalOS?",
     a: "Antes del precio, la pregunta real es: ¿cuánto te está costando NO tenerlo? Un consultorio con 100 pacientes/día pierde más de $6.000.000/mes en horas administrativas. En la demo hacemos el cálculo con tus números reales y te damos la inversión exacta.",
   },
-  {
-    q: "¿Funciona para clínicas con varios profesionales?",
-    a: "DentalOS Fase 1 está optimizado para consultorios de 1-3 profesionales. Si tenés una clínica más grande, hablemos — podemos ver si encaja o somos honestos si no es el momento.",
-  },
 ];
 
 const problems = [
   {
     icon: "📱",
-    title: "WhatsApp personal para turnos",
-    desc: "El odontólogo pierde 1-2 horas por día gestionando mensajes. Pacientes que preguntan fuera de horario. Confirmaciones manuales. Cancelaciones sin aviso.",
+    title: "WhatsApp personal explotado",
+    desc: "Tu WhatsApp es un caos entre tu vida personal, pacientes que escriben a cualquier hora y reprogramaciones de último momento. Terminás el día sintiéndote secretaria en vez de odontóloga.",
   },
   {
     icon: "💸",
-    title: "Obras sociales: deuda que no se ve",
-    desc: "IOMA, OSDE, Swiss Medical, PAMI. Cada una con sus códigos, sus tiempos y sus rechazos. El saldo deudor acumulado existe, pero nadie sabe exactamente cuánto es.",
+    title: "Obras sociales: plata que se pierde en el camino",
+    desc: "Códigos, autorizaciones, liquidaciones, rechazos. Cada obra social es un mundo y vos tenés que descifrarlos todos mientras atendés pacientes. Al final del mes, no sabés cuánto te deben, cuánto cobraste ni cuánto se te escapó.",
   },
   {
     icon: "📋",
-    title: "Historia clínica en papel o Word",
-    desc: "Fichas físicas desorganizadas, sin búsqueda, sin trazabilidad. Cada vez que entra un paciente, hay que reconstruir el historial a mano.",
+    title: "Historias clínicas en papel",
+    desc: "Fichas que no encontrás, historiales que reconstruís de memoria, estudios que sabés que están... en algún lado. Cada paciente que entra es una búsqueda del tesoro que nadie disfruta.",
   },
 ];
 
 const beforeAfter = [
   { bad: "WhatsApp personal para turnos", good: "Agente responde y agenda 24/7" },
   { bad: "Sin saber cuánto facturaste este mes", good: "Dashboard financiero en tiempo real" },
-  { bad: "Obras sociales: deuda invisible", good: "Saldo deudor por obra social, visible" },
   { bad: "Pacientes que abandonan sin aviso", good: "Alerta automática de tratamientos sin completar" },
   { bad: "Historia clínica en papel o Word", good: "Historia clínica digital + carga por voz" },
   { bad: "Atención solo en horario de trabajo", good: "Atención automatizada fuera de horario" },
@@ -70,22 +61,12 @@ const features = [
   {
     num: "02",
     title: "El saldo que siempre quisiste saber. Ahora visible.",
-    desc: "¿Cuánto te debe IOMA este mes? ¿Cuántas prestaciones de OSDE están pendientes? El dashboard hace visible lo que siempre fue opaco.",
+    desc: "¿Cuántas prestaciones de OSDE/OSECAC/IAPOS están pendientes? El dashboard hace visible lo que siempre fue invisible.",
   },
   {
     num: "03",
     title: "La historia clínica que se carga sola (casi).",
-    desc: "Terminás la consulta, grabás un audio de 2 minutos. DentalOS lo transcribe y completa la historia clínica automáticamente. Sin escribir. Sin papel.",
-  },
-  {
-    num: "04",
-    title: "El briefing del día, sin que lo pidas.",
-    desc: "Cada mañana, DentalOS te envía un resumen: turnos de hoy, quién confirmó, quién no, cuánto se facturó ayer.",
-  },
-  {
-    num: "05",
-    title: "El paciente que iba a desaparecer. Ahora no.",
-    desc: "DentalOS detecta automáticamente los casos inactivos y te alerta para hacer el seguimiento.",
+    desc: "Terminás la consulta, grabás un audio de 2 minutos. DentalOS lo transcribe y completa la historia clínica automáticamente. Carga la prestación correspondiente. Sin escribir. Sin papel.",
   },
 ];
 
@@ -1213,7 +1194,7 @@ const DentalOS = () => {
               <em>es para vos.</em>
             </h2>
             <p className="section-copy" style={{ maxWidth: 560, margin: "0 auto 40px" }}>
-              Sabemos que te cuesta tiempo, estrés y dolores de cabeza. Pero también sabemos que DentalOS no es para todos — y preferimos ser honestos con eso. Por eso la demo no es un pitch: nos sentamos juntos, miramos tus números reales, y vemos si tiene sentido para tu consultorio. Si no es rentable para vos, te lo decimos. Y si arrancás y en 60 días el sistema no funciona para tu consultorio, te devolvemos el dinero.
+              DentalOS no es para todos — y preferimos ser honestos con eso. Por eso la demo no es un pitch: nos sentamos juntos, miramos tus números reales, y vemos si tiene sentido para tu consultorio. Si no es rentable para vos, te lo decimos. Y si arrancás y en 60 días no funciona, te devolvemos el dinero.
             </p>
             <button
               onClick={openCalPopup}
